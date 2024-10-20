@@ -1,0 +1,109 @@
+﻿using UniRx;
+using UniRx.Triggers;
+using UnityEngine;
+using UnityEngine.AI;
+using Zenject;
+
+namespace Scripts
+{
+	public class EnemiesPresenter : ITickable
+	{
+		private readonly EnemiesModel _model;
+		private readonly EnemiesView _view;
+
+		private float _randomSpawnCooldown = 0;
+		private Camera _camera;
+
+		public EnemiesPresenter(EnemiesModel enemiesModel, EnemiesView enemiesView, CompositeDisposable disposables)
+		{
+			_camera = Camera.main;
+			_model = enemiesModel;
+			_view = enemiesView;
+
+			//Update killed enemies.
+			_view.Enemies
+				.ObserveRemove()
+				.Subscribe(_ => _model.KilledEnemies.Value++)
+				.AddTo(disposables);
+
+			//Update killed enemy counter text.
+			_model.KilledEnemies
+				.Subscribe(value => _view.KilledTextField.text = value.ToString())
+				.AddTo(disposables);
+		}
+
+		public void Tick()
+		{
+			SpawnerTick();
+			EnemiesTick();
+		}
+
+		private void EnemiesTick()
+		{
+			_view.UpdateEnemies();
+		}
+
+		private void SpawnerTick()
+		{
+			_randomSpawnCooldown -= Time.deltaTime;
+
+			if (_randomSpawnCooldown <= 0)
+			{
+				_randomSpawnCooldown = _model.SpawnSettings.GetRandomSpawnCooldown();
+				SpawnEnemies();
+			}
+		}
+
+		private void SpawnEnemies()
+		{
+			if (_view.Enemies.Count >= _model.SpawnSettings.MaxSpawnAmount)
+			{
+				return;
+			}
+
+			int amount = _model.SpawnSettings.GetSpawnAmount();
+			float radius = _model.SpawnSettings.Radius;
+			for (int i = 0; i < amount; i++)
+			{
+				Vector2 position = Vector2.one * Random.onUnitSphere * radius + _model.PlayerView.Position;
+				if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1, NavMesh.AllAreas))
+				{
+					var enemy = _model.EnemyFactory.Create(position, _model.EnemySettings[Random.Range(0, _model.EnemySettings.Length)]);
+					_view.Enemies.Add(enemy);
+				}
+			}
+		}
+
+		public static Rect GetScreenWorldRect(Camera value)
+		{
+			Vector3 bottomLeft = value.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
+			Vector3 topRight = value.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
+			return (new Rect(bottomLeft.x, bottomLeft.y, topRight.x * 2f, topRight.y * 2f));
+		}
+
+		[System.Serializable]
+		public class SpawnSettings
+		{
+			[field: SerializeField]
+			public GameObject BaseEnemyPrefab { get; private set; }
+			[field: SerializeField]
+			private Vector2 SpawnIntervalRange { get; set; } = new UnityEngine.Vector2(0.5f, 1.5f);
+			[field: SerializeField]
+			private Vector2Int SpawAmountRange { get; set; } = new Vector2Int(1, 5);
+			[field: SerializeField]
+			public float Radius { get; private set; } = 20;
+			[field: SerializeField]
+			public int MaxSpawnAmount { get; private set; }
+
+			public int GetSpawnAmount()
+			{
+				return Random.Range(SpawAmountRange.x, SpawAmountRange.y);
+			}
+
+			public float GetRandomSpawnCooldown()
+			{
+				return Random.Range(SpawnIntervalRange.x, SpawnIntervalRange.y);
+			}
+		}
+	}
+}
