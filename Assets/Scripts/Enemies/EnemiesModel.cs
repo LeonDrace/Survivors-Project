@@ -1,24 +1,29 @@
-﻿
+﻿using Assets.Scripts.Enemies;
+using Scripts;
 using UniRx;
-using static Scripts.EnemiesPresenter;
+using UnityEngine;
 
-namespace Scripts
+namespace Survivors.Enemy
 {
 	public class EnemiesModel
 	{
-		public SpawnSettings SpawnSettings { get; private set; }
-		public EnemyView.Settings[] EnemySettings { get; private set; }
-		public EnemyView.Factory EnemyFactory { get; private set; }
+		public EnemiesPresenter.SpawnSettings SpawnSettings { get; private set; }
+		public EnemyModel.Settings[] EnemySettings { get; private set; }
+		public EnemyPresenter.Factory EnemyFactory { get; private set; }
 		public PlayerView PlayerView { get; private set; }
 		public ReactiveProperty<int> KilledEnemies { get; private set; }
+		public Camera Camera { get; private set; }
+		public float RandomSpawnCooldown { get; set; }
+		public ReactiveCollection<EnemyPresenter> Enemies { get; private set; } = new ReactiveCollection<EnemyPresenter>();
 
-		public EnemiesModel(SpawnSettings spawnSettings, EnemyView.Settings[] enemySettings, EnemyView.Factory factory, PlayerView playerView)
+		public EnemiesModel(EnemiesPresenter.SpawnSettings spawnSettings, EnemyModel.Settings[] enemySettings, EnemyPresenter.Factory factory, PlayerView playerView)
 		{
 			KilledEnemies = new ReactiveProperty<int>(0);
 			SpawnSettings = spawnSettings;
 			EnemySettings = enemySettings;
 			EnemyFactory = factory;
 			PlayerView = playerView;
+			Camera = Camera.main;
 		}
 	}
 }

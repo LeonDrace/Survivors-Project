@@ -1,5 +1,6 @@
+using Assets.Scripts.Enemies;
+using Survivors.Enemy;
 using UniRx;
-using UnityEditor;
 using UnityEngine;
 using Zenject;
 
@@ -33,10 +34,8 @@ namespace Scripts
 			//Enemies
 			Container.Bind<EnemiesModel>().AsSingle();
 			Container.BindInterfacesAndSelfTo<EnemiesPresenter>().AsSingle();
-			Container.BindFactory<UnityEngine.Vector2, EnemyView.Settings, EnemyView, EnemyView.Factory>()
-				.FromComponentInNewPrefab(_spawnSettings.BaseEnemyPrefab)
-				.WithGameObjectName("Enemy")
-				.UnderTransformGroup("Enemies");
+			Container.Bind<EnemyModel>().AsTransient();
+			Container.BindFactory<Vector2, EnemyModel.Settings, EnemyPresenter, EnemyPresenter.Factory>();
 		}
 
 		private void OnDestroy()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Survivors.Enemy;
+using UnityEngine;
 using Zenject;
 
 namespace Scripts
@@ -7,7 +8,7 @@ namespace Scripts
 	public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller>
 	{
 		[SerializeField]
-		private EnemyView.Settings[] _enemies;
+		private EnemyModel.Settings[] _enemies;
 		[SerializeField]
 		private EnemiesPresenter.SpawnSettings _spawnSettings;
 		[SerializeField]

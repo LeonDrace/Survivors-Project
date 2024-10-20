@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemies:
   - <name>k__BackingField: Slow
-    <color>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
-    <sprite>k__BackingField: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+    <Prefab>k__BackingField: {fileID: 5933081570010237410, guid: 129b2bb3f9ca2af41be36d8e44fc185b, type: 3}
+    <Color>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
+    <Sprite>k__BackingField: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
     <Health>k__BackingField: 3
     <StoppingDistance>k__BackingField: 1
     <Range>k__BackingField: 1.5
@@ -23,9 +24,11 @@ MonoBehaviour:
     <DamageCooldown>k__BackingField: 1
     <Speed>k__BackingField: 1.5
     <DamageFlickerDuration>k__BackingField: 0.16
+    <PathfindingInverval>k__BackingField: 20
   - <name>k__BackingField: Fast
-    <color>k__BackingField: {r: 0.9965122, g: 1, b: 0, a: 1}
-    <sprite>k__BackingField: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+    <Prefab>k__BackingField: {fileID: 5933081570010237410, guid: 129b2bb3f9ca2af41be36d8e44fc185b, type: 3}
+    <Color>k__BackingField: {r: 1, g: 0.9632966, b: 0, a: 1}
+    <Sprite>k__BackingField: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
     <Health>k__BackingField: 2
     <StoppingDistance>k__BackingField: 1
     <Range>k__BackingField: 1.5
@@ -33,8 +36,8 @@ MonoBehaviour:
     <DamageCooldown>k__BackingField: 1
     <Speed>k__BackingField: 2
     <DamageFlickerDuration>k__BackingField: 0.16
+    <PathfindingInverval>k__BackingField: 20
   _spawnSettings:
-    <BaseEnemyPrefab>k__BackingField: {fileID: 5933081570010237410, guid: 129b2bb3f9ca2af41be36d8e44fc185b, type: 3}
     <SpawnIntervalRange>k__BackingField: {x: 0.5, y: 1.5}
     <SpawAmountRange>k__BackingField: {x: 1, y: 3}
     <Radius>k__BackingField: 20
@@ -45,5 +48,4 @@ MonoBehaviour:
     <baseProjectilePrefab>k__BackingField: {fileID: 2352757070529799028, guid: 1b9e8e4ca4f49ea46b2bcce8e0d89185, type: 3}
     <Weapons>k__BackingField:
     - {fileID: 11400000, guid: 4314096209454974f9cc97be16ead884, type: 2}
-    <WeaponUiPrefab>k__BackingField: {fileID: 9184050950930488084, guid: 1cdad9b7549f13f49842cb6b62dd9ca2, type: 3}
     <DamageFlickerDuration>k__BackingField: 0.16

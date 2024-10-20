@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TMPro;
+﻿using Survivors.Enemy;
 using UnityEngine;
 
 namespace Scripts

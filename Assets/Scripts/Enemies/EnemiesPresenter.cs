@@ -1,10 +1,9 @@
 ﻿using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 
-namespace Scripts
+namespace Survivors.Enemy
 {
 	public class EnemiesPresenter : ITickable
 	{
@@ -12,16 +11,14 @@ namespace Scripts
 		private readonly EnemiesView _view;
 
 		private float _randomSpawnCooldown = 0;
-		private Camera _camera;
 
 		public EnemiesPresenter(EnemiesModel enemiesModel, EnemiesView enemiesView, CompositeDisposable disposables)
 		{
-			_camera = Camera.main;
 			_model = enemiesModel;
 			_view = enemiesView;
 
 			//Update killed enemies.
-			_view.Enemies
+			_model.Enemies
 				.ObserveRemove()
 				.Subscribe(_ => _model.KilledEnemies.Value++)
 				.AddTo(disposables);
@@ -40,7 +37,18 @@ namespace Scripts
 
 		private void EnemiesTick()
 		{
-			_view.UpdateEnemies();
+			int count = _model.Enemies.Count;
+			for (int i = count - 1; i >= 0; i--)
+			{
+				var enemy = _model.Enemies[i];
+				enemy.OnTick();
+
+				if (enemy.IsDead())
+				{
+					enemy.Destroy();
+					_model.Enemies.RemoveAt(i);
+				}
+			}
 		}
 
 		private void SpawnerTick()
@@ -56,7 +64,7 @@ namespace Scripts
 
 		private void SpawnEnemies()
 		{
-			if (_view.Enemies.Count >= _model.SpawnSettings.MaxSpawnAmount)
+			if (_model.Enemies.Count >= _model.SpawnSettings.MaxSpawnAmount)
 			{
 				return;
 			}
@@ -69,7 +77,7 @@ namespace Scripts
 				if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1, NavMesh.AllAreas))
 				{
 					var enemy = _model.EnemyFactory.Create(position, _model.EnemySettings[Random.Range(0, _model.EnemySettings.Length)]);
-					_view.Enemies.Add(enemy);
+					_model.Enemies.Add(enemy);
 				}
 			}
 		}
@@ -84,8 +92,6 @@ namespace Scripts
 		[System.Serializable]
 		public class SpawnSettings
 		{
-			[field: SerializeField]
-			public GameObject BaseEnemyPrefab { get; private set; }
 			[field: SerializeField]
 			private Vector2 SpawnIntervalRange { get; set; } = new UnityEngine.Vector2(0.5f, 1.5f);
 			[field: SerializeField]
