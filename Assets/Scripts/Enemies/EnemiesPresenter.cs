@@ -8,25 +8,12 @@ namespace Survivors.Enemy
 	public class EnemiesPresenter : ITickable
 	{
 		private readonly EnemiesModel _model;
-		private readonly EnemiesView _view;
 
 		private float _randomSpawnCooldown = 0;
 
-		public EnemiesPresenter(EnemiesModel enemiesModel, EnemiesView enemiesView, CompositeDisposable disposables)
+		public EnemiesPresenter(EnemiesModel enemiesModel, CompositeDisposable disposables)
 		{
 			_model = enemiesModel;
-			_view = enemiesView;
-
-			//Update killed enemies.
-			_model.Enemies
-				.ObserveRemove()
-				.Subscribe(_ => _model.KilledEnemies.Value++)
-				.AddTo(disposables);
-
-			//Update killed enemy counter text.
-			_model.KilledEnemies
-				.Subscribe(value => _view.KilledTextField.text = value.ToString())
-				.AddTo(disposables);
 		}
 
 		public void Tick()

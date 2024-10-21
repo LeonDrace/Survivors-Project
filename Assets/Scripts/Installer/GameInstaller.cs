@@ -36,6 +36,7 @@ namespace Scripts
 			Container.BindInterfacesAndSelfTo<EnemiesPresenter>().AsSingle();
 			Container.Bind<EnemyModel>().AsTransient();
 			Container.BindFactory<Vector2, EnemyModel.Settings, EnemyPresenter, EnemyPresenter.Factory>();
+			Container.Bind<EnemyKillCounterPresenter>().AsSingle().NonLazy();
 		}
 
 		private void OnDestroy()

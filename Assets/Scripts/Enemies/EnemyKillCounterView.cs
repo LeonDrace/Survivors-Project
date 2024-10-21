@@ -1,10 +1,9 @@
 ﻿using TMPro;
-using UniRx;
 using UnityEngine;
 
 namespace Survivors.Enemy
 {
-	public class EnemiesView : MonoBehaviour
+	public class EnemyKillCounterView : MonoBehaviour
 	{
 		[SerializeField]
 		private TextMeshProUGUI _killedTextField;
