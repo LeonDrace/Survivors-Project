@@ -1,10 +1,13 @@
 using Assets.Scripts.Enemies;
+using Scripts;
+using Survivors.Data;
 using Survivors.Enemy;
+using Survivors.Player;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace Scripts
+namespace Survivors.Installer
 {
 	public class GameInstaller : MonoInstaller<GameInstaller>
 	{
@@ -17,10 +20,26 @@ namespace Scripts
 
 		public override void InstallBindings()
 		{
-			//Misc
-			Container.BindInstance(_disposer);
+			InstallMisc();
+			InstallGameState();
+			InstallPlayer();
+			InstallEnemies();
+		}
 
-			//Player
+		private void InstallMisc()
+		{
+			Container.BindInstance(_disposer);
+		}
+
+		private void InstallGameState()
+		{
+			Container.Bind<EnemyData>().AsSingle();
+			Container.Bind<PlayerData>().AsSingle();
+			Container.Bind<GameState>().AsSingle().NonLazy();
+		}
+
+		private void InstallPlayer()
+		{
 			Container.Bind<PlayerModel>().AsSingle().NonLazy();
 			Container.Bind<WeaponsModel>().AsSingle().NonLazy();
 			Container.Bind<PlayerPresenter>().AsSingle().NonLazy();
@@ -30,8 +49,10 @@ namespace Scripts
 				.FromComponentInNewPrefab(_playerSettings.baseProjectilePrefab)
 				.WithGameObjectName("Projectile")
 				.UnderTransformGroup("Projectiles");
+		}
 
-			//Enemies
+		private void InstallEnemies()
+		{
 			Container.Bind<EnemiesModel>().AsSingle();
 			Container.BindInterfacesAndSelfTo<EnemiesPresenter>().AsSingle();
 			Container.Bind<EnemyModel>().AsTransient();

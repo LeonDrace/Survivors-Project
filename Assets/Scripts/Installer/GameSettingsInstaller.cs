@@ -1,8 +1,9 @@
 ﻿using Survivors.Enemy;
+using Survivors.Player;
 using UnityEngine;
 using Zenject;
 
-namespace Scripts
+namespace Survivors.Installer
 {
 	[CreateAssetMenu]
 	public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller>
