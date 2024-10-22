@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts
+namespace Survivors.Player
 {
 	public class PlayerView : MonoBehaviour
 	{

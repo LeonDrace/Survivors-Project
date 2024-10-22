@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Survivors.Player;
 using UniRx;
-using UnityEditor;
 
 namespace Scripts
 {

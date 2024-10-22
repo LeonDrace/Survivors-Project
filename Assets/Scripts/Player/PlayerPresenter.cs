@@ -1,36 +1,38 @@
+using Scripts;
+using Survivors.Input;
 using System;
 using UniRx;
 using UnityEngine;
 
-namespace Scripts
+namespace Survivors.Player
 {
 	public class PlayerPresenter
 	{
-		private readonly PlayerView _playerView;
-		private readonly PlayerModel _playerModel;
+		private readonly PlayerView _view;
+		private readonly PlayerModel _model;
 
 		public PlayerPresenter(Joystick joystick, PlayerView playerView, PlayerModel playerModel, CompositeDisposable disposer)
 		{
-			_playerModel = playerModel;
-			_playerView = playerView;
+			_model = playerModel;
+			_view = playerView;
 
 			//Move
 			joystick.OnInput
-				.TakeWhile(_ => !_playerModel.IsDead.Value)
+				.TakeWhile(_ => !_model.IsDead.Value)
 				.Subscribe(playerView.Move)
 				.AddTo(disposer);
 
 			//Damage
-			_playerModel.CurrentHealthPercentage
+			_model.CurrentHealthPercentage
 				.Subscribe(x =>
 				{
 					if (x < 1)
 					{
-						_playerView.DamageRenderer.enabled = true;
+						_view.DamageRenderer.enabled = true;
 
 						Observable
-							.Timer(TimeSpan.FromSeconds(_playerModel.DamageFlickerDuration))
-							.Subscribe(x => { _playerView.DamageRenderer.enabled = false; })
+							.Timer(TimeSpan.FromSeconds(_model.DamageFlickerDuration))
+							.Subscribe(x => { _view.DamageRenderer.enabled = false; })
 							.AddTo(disposer);
 					}
 
@@ -38,27 +40,27 @@ namespace Scripts
 				.AddTo(disposer);
 
 			//Current health
-			_playerModel.CurrentHealthPercentage
-				.Subscribe(x => _playerView.HealthSlider.value = x);
+			_model.CurrentHealthPercentage
+				.Subscribe(x => _view.HealthSlider.value = x);
 
 			//Death
-			_playerModel.IsDead
+			_model.IsDead
 				.Where(isDead => isDead == true)
 				.Subscribe(x =>
 				{
-					_playerView.RestartScreen.gameObject.SetActive(true);
+					_view.RestartScreen.gameObject.SetActive(true);
 				})
 				.AddTo(disposer);
 		}
 
 		public void DealDamge(float damage)
 		{
-			_playerModel.CurrentHealth.Value -= damage;
+			_model.CurrentHealth.Value -= damage;
 		}
 
 		public Transform GetPlayerTransform()
 		{
-			return _playerView.transform;
+			return _view.transform;
 		}
 	}
 }

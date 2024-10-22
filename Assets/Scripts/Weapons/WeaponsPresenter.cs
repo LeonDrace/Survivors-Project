@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Weapons;
+using Survivors.Player;
 using UniRx;
 using UnityEngine;
 using Zenject;
