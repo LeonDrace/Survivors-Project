@@ -59,9 +59,9 @@ namespace Survivors.Enemy
 			int amount = _model.SpawnSettings.GetSpawnAmount();
 			float radius = _model.SpawnSettings.Radius;
 			Vector2 playerPosition = _model.PlayerTransform.position;
+			Vector2 position = Vector2.one * Random.onUnitSphere * radius + playerPosition;
 			for (int i = 0; i < amount; i++)
 			{
-				Vector2 position = Vector2.one * Random.onUnitSphere * radius + playerPosition;
 				if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1, NavMesh.AllAreas))
 				{
 					var enemy = _model.EnemyFactory.Create(position, _model.EnemySettings[Random.Range(0, _model.EnemySettings.Length)]);
