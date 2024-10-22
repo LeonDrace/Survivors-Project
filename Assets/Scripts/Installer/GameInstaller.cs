@@ -12,11 +12,11 @@ namespace Survivors.Installer
 	public class GameInstaller : MonoInstaller<GameInstaller>
 	{
 		[Inject]
-		private EnemiesPresenter.SpawnSettings _spawnSettings;
+		private EnemiesPresenter.SpawnSettings m_SpawnSettings;
 		[Inject]
-		private PlayerModel.PlayerSettings _playerSettings;
+		private PlayerModel.PlayerSettings m_PlayerSettings;
 
-		private readonly CompositeDisposable _disposer = new();
+		private readonly CompositeDisposable m_Disposer = new();
 
 		public override void InstallBindings()
 		{
@@ -29,7 +29,7 @@ namespace Survivors.Installer
 
 		private void InstallMisc()
 		{
-			Container.BindInstance(_disposer);
+			Container.BindInstance(m_Disposer);
 		}
 
 		private void InstallGameState()
@@ -47,7 +47,7 @@ namespace Survivors.Installer
 			Container.BindInterfacesAndSelfTo<WeaponsPresenter>().AsSingle();
 			Container.BindFactory<WeaponSetting, WeaponBehavior, WeaponBehavior.Factory>();
 			Container.BindFactory<Vector2, Vector2, WeaponSetting, ProjectileView, ProjectileView.Factory>()
-				.FromComponentInNewPrefab(_playerSettings.baseProjectilePrefab)
+				.FromComponentInNewPrefab(m_PlayerSettings.baseProjectilePrefab)
 				.WithGameObjectName("Projectile")
 				.UnderTransformGroup("Projectiles");
 		}
@@ -69,7 +69,7 @@ namespace Survivors.Installer
 
 		private void OnDestroy()
 		{
-			_disposer.Dispose();
+			m_Disposer.Dispose();
 		}
 	}
 }

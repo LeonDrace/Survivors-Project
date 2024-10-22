@@ -5,14 +5,14 @@ namespace Survivors.Data
 	{
 		public GameState(PlayerData playerData, EnemyData enemyData)
 		{
-			_playerData = playerData;
-			_enemyData = enemyData;
+			m_PlayerData = playerData;
+			m_EnemyData = enemyData;
 		}
 
-		private readonly PlayerData _playerData;
-		public PlayerData PlayerData => _playerData;
+		private readonly PlayerData m_PlayerData;
+		public PlayerData PlayerData => m_PlayerData;
 
-		private readonly EnemyData _enemyData;
-		public EnemyData EnemyData => _enemyData;
+		private readonly EnemyData m_EnemyData;
+		public EnemyData EnemyData => m_EnemyData;
 	}
 }

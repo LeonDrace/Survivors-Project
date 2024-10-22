@@ -299,8 +299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4200c800446006b4ca1f7650c7698405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stick: {fileID: 6811781269091491732}
-  _stickParent: {fileID: 5733688085468461787}
+  m_Stick: {fileID: 6811781269091491732}
+  m_StickParent: {fileID: 5733688085468461787}
 --- !u!114 &4723491768936873176
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -132,11 +132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be926abfe5d3e494aaeee236472ccadf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 7521107774609063131}
-  _damageRenderer: {fileID: 5343515697172888730}
-  _agent: {fileID: 3114277309821646254}
-  IsDead:
-    value: 0
+  m_SpriteRenderer: {fileID: 7521107774609063131}
+  m_DamageRenderer: {fileID: 5343515697172888730}
+  m_Agent: {fileID: 3114277309821646254}
 --- !u!212 &7521107774609063131
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -124,10 +124,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c8954c84273a664d8c552e1dd55c1f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3.5
-  _healthSlider: {fileID: 2184793223118375027}
-  _damageRenderer: {fileID: 1500497028845663763}
-  _restartScreen: {fileID: 0}
+  m_Speed: 3.5
+  m_HealthSlider: {fileID: 2184793223118375027}
+  m_DamageRenderer: {fileID: 1500497028845663763}
 --- !u!212 &6423869145328326845
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -244,7 +243,7 @@ GameObject:
   - component: {fileID: 5446163469105733787}
   - component: {fileID: 1500497028845663763}
   m_Layer: 0
-  m_Name: Flicker
+  m_Name: DamageSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

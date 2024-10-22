@@ -7,27 +7,27 @@ namespace Scripts
 	public class WeaponView : MonoBehaviour
 	{
 		[SerializeField]
-		private Image _iconField;
+		private Image m_IconField;
 		[SerializeField]
-		private Image _cooldownField;
+		private Image m_CooldownField;
 		[SerializeField]
-		private TextMeshProUGUI _nameField;
+		private TextMeshProUGUI m_NameField;
 
 		public WeaponSetting WeaponSetting { get; private set; }
 
 		public void Initialize(WeaponSetting weaponSetting)
 		{
 			WeaponSetting = weaponSetting;
-			_cooldownField.fillAmount = 0;
-			_cooldownField.sprite = weaponSetting.ProjectileSprite;
-			_iconField.sprite = weaponSetting.ProjectileSprite;
-			_iconField.color = weaponSetting.ProjectileColor;
-			_nameField.text = weaponSetting.WeaponName;
+			m_CooldownField.fillAmount = 0;
+			m_CooldownField.sprite = weaponSetting.ProjectileSprite;
+			m_IconField.sprite = weaponSetting.ProjectileSprite;
+			m_IconField.color = weaponSetting.ProjectileColor;
+			m_NameField.text = weaponSetting.WeaponName;
 		}
 
 		public void UpdateSlider(float value)
 		{
-			_cooldownField.fillAmount = value;
+			m_CooldownField.fillAmount = value;
 		}
 	}
 }

@@ -5,21 +5,21 @@ namespace Scripts
 {
 	public class WeaponsModel
 	{
-		private readonly WeaponBehavior.Factory _factory;
+		private readonly WeaponBehavior.Factory m_Factory;
 
 		public ReactiveCollection<WeaponBehavior> WeaponBehaviors = new ReactiveCollection<WeaponBehavior>();
 
 		public WeaponsModel(PlayerModel playerModel, WeaponBehavior.Factory factory, CompositeDisposable disposables)
 		{
-			_factory = factory;
+			m_Factory = factory;
 			foreach (var weapon in playerModel.EquippedWeapons)
 			{
-				WeaponBehaviors.Add(_factory.Create(weapon));
+				WeaponBehaviors.Add(m_Factory.Create(weapon));
 			}
 
 			playerModel.EquippedWeapons
 				.ObserveAdd()
-				.Subscribe(weapon => WeaponBehaviors.Add(_factory.Create(weapon.Value)))
+				.Subscribe(weapon => WeaponBehaviors.Add(m_Factory.Create(weapon.Value)))
 				.AddTo(disposables);
 
 			playerModel.EquippedWeapons

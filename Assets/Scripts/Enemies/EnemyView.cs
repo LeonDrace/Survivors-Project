@@ -9,45 +9,45 @@ namespace Survivors.Enemy
 	public class EnemyView : MonoBehaviour
 	{
 		[SerializeField]
-		private SpriteRenderer _spriteRenderer;
+		private SpriteRenderer m_SpriteRenderer;
 		[SerializeField]
-		private SpriteRenderer _damageRenderer;
+		private SpriteRenderer m_DamageRenderer;
 		[SerializeField]
-		private NavMeshAgent _agent;
+		private NavMeshAgent m_Agent;
 
-		public NavMeshAgent Agent => _agent;
+		public NavMeshAgent Agent => m_Agent;
 		public event Action<float> onDamage;
 
-		private bool _showsHitEffect = false;
-		private EnemyModel.Settings _settings;
+		private bool m_ShowsHitEffect = false;
+		private EnemyModel.Settings m_Settings;
 
 		public void Construct(Vector2 position, EnemyModel.Settings settings)
 		{
-			_settings = settings;
+			m_Settings = settings;
 			transform.position = new Vector3(position.x, position.y, 0);
-			_spriteRenderer.sprite = settings.Sprite;
-			_damageRenderer.sprite = settings.Sprite;
-			_spriteRenderer.color = settings.Color;
-			_agent.speed = settings.Speed;
-			_agent.stoppingDistance = settings.StoppingDistance;
-			_agent.updateRotation = false;
-			_agent.updateUpAxis = false;
+			m_SpriteRenderer.sprite = settings.Sprite;
+			m_DamageRenderer.sprite = settings.Sprite;
+			m_SpriteRenderer.color = settings.Color;
+			m_Agent.speed = settings.Speed;
+			m_Agent.stoppingDistance = settings.StoppingDistance;
+			m_Agent.updateRotation = false;
+			m_Agent.updateUpAxis = false;
 		}
 
 		public void DealDamage(float damage)
 		{
 			onDamage?.Invoke(damage);
 
-			if (_damageRenderer != null && !_showsHitEffect)
+			if (m_DamageRenderer != null && !m_ShowsHitEffect)
 			{
-				_damageRenderer.enabled = true;
-				_showsHitEffect = true;
+				m_DamageRenderer.enabled = true;
+				m_ShowsHitEffect = true;
 				Observable
-					.Timer(TimeSpan.FromSeconds(_settings.DamageFlickerDuration))
+					.Timer(TimeSpan.FromSeconds(m_Settings.DamageFlickerDuration))
 					.Subscribe(_ =>
 					{
-						_damageRenderer.enabled = false;
-						_showsHitEffect = false;
+						m_DamageRenderer.enabled = false;
+						m_ShowsHitEffect = false;
 					})
 					.AddTo(this);
 			}

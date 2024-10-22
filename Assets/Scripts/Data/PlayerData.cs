@@ -9,11 +9,11 @@ namespace Survivors.Data
 	{
 		public PlayerData(PlayerView playerView)
 		{
-			_transform = playerView.transform;
+			m_Transform = playerView.transform;
 		}
 
-		private readonly Transform _transform;
-		public Transform Transform => _transform;
+		private readonly Transform m_Transform;
+		public Transform Transform => m_Transform;
 		public ReactiveProperty<float> CurrentHealth { get; set; }
 		public ReactiveProperty<float> CurrentHealthPercentage { get; set; }
 		public ReactiveProperty<bool> IsDead { get; set; }

@@ -7,13 +7,13 @@ namespace Survivors.Enemy
 {
 	public class EnemiesPresenter : ITickable
 	{
-		private readonly EnemiesModel _model;
+		private readonly EnemiesModel m_Model;
 
 		private float _randomSpawnCooldown = 0;
 
 		public EnemiesPresenter(EnemiesModel enemiesModel, CompositeDisposable disposables)
 		{
-			_model = enemiesModel;
+			m_Model = enemiesModel;
 		}
 
 		public void Tick()
@@ -24,16 +24,16 @@ namespace Survivors.Enemy
 
 		private void EnemiesTick()
 		{
-			int count = _model.Enemies.Count;
+			int count = m_Model.Enemies.Count;
 			for (int i = count - 1; i >= 0; i--)
 			{
-				var enemy = _model.Enemies[i];
+				var enemy = m_Model.Enemies[i];
 				enemy.OnTick();
 
 				if (enemy.IsDead())
 				{
 					enemy.Destroy();
-					_model.Enemies.RemoveAt(i);
+					m_Model.Enemies.RemoveAt(i);
 				}
 			}
 		}
@@ -44,28 +44,28 @@ namespace Survivors.Enemy
 
 			if (_randomSpawnCooldown <= 0)
 			{
-				_randomSpawnCooldown = _model.SpawnSettings.GetRandomSpawnCooldown();
+				_randomSpawnCooldown = m_Model.SpawnSettings.GetRandomSpawnCooldown();
 				SpawnEnemies();
 			}
 		}
 
 		private void SpawnEnemies()
 		{
-			if (_model.Enemies.Count >= _model.SpawnSettings.MaxSpawnAmount)
+			if (m_Model.Enemies.Count >= m_Model.SpawnSettings.MaxSpawnAmount)
 			{
 				return;
 			}
 
-			int amount = _model.SpawnSettings.GetSpawnAmount();
-			float radius = _model.SpawnSettings.Radius;
-			Vector2 playerPosition = _model.PlayerTransform.position;
+			int amount = m_Model.SpawnSettings.GetSpawnAmount();
+			float radius = m_Model.SpawnSettings.Radius;
+			Vector2 playerPosition = m_Model.PlayerTransform.position;
 			Vector2 position = Vector2.one * Random.onUnitSphere * radius + playerPosition;
 			for (int i = 0; i < amount; i++)
 			{
 				if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1, NavMesh.AllAreas))
 				{
-					var enemy = _model.EnemyFactory.Create(position, _model.EnemySettings[Random.Range(0, _model.EnemySettings.Length)]);
-					_model.Enemies.Add(enemy);
+					var enemy = m_Model.EnemyFactory.Create(position, m_Model.EnemySettings[Random.Range(0, m_Model.EnemySettings.Length)]);
+					m_Model.Enemies.Add(enemy);
 				}
 			}
 		}

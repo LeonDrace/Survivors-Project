@@ -6,19 +6,19 @@ namespace Survivors.Player
 	public class PlayerView : MonoBehaviour
 	{
 		[SerializeField, Range(float.Epsilon, 5f)]
-		private float _speed;
+		private float m_Speed;
 		[SerializeField]
-		private Slider _healthSlider;
+		private Slider m_HealthSlider;
 		[SerializeField]
-		private SpriteRenderer _damageRenderer;
+		private SpriteRenderer m_DamageRenderer;
 
-		public Slider HealthSlider => _healthSlider;
-		public SpriteRenderer DamageRenderer => _damageRenderer;
+		public Slider HealthSlider => m_HealthSlider;
+		public SpriteRenderer DamageRenderer => m_DamageRenderer;
 
 		public void Move(Vector2 direction)
 		{
 			var oldPosition = transform.position;
-			transform.position = Vector3.Lerp(oldPosition, oldPosition + (Vector3)direction * _speed,
+			transform.position = Vector3.Lerp(oldPosition, oldPosition + (Vector3)direction * m_Speed,
 				Time.deltaTime);
 		}
 

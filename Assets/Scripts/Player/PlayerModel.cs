@@ -8,27 +8,27 @@ namespace Survivors.Player
 {
 	public class PlayerModel
 	{
-		private readonly PlayerSettings _settings;
-		private readonly PlayerData _data;
+		private readonly PlayerSettings m_Settings;
+		private readonly PlayerData m_Data;
 
-		public ReactiveProperty<float> CurrentHealth => _data.CurrentHealth;
-		public ReactiveProperty<float> CurrentHealthPercentage => _data.CurrentHealthPercentage;
-		public ReactiveProperty<bool> IsDead => _data.IsDead;
-		public ReactiveCollection<WeaponSetting> EquippedWeapons => _data.EquippedWeapons;
+		public ReactiveProperty<float> CurrentHealth => m_Data.CurrentHealth;
+		public ReactiveProperty<float> CurrentHealthPercentage => m_Data.CurrentHealthPercentage;
+		public ReactiveProperty<bool> IsDead => m_Data.IsDead;
+		public ReactiveCollection<WeaponSetting> EquippedWeapons => m_Data.EquippedWeapons;
 		public float DamageFlickerDuration { get; set; }
 
 		public PlayerModel(PlayerSettings settings, PlayerData playerData, CompositeDisposable disposables)
 		{
-			_settings = settings;
-			_data = playerData;
+			m_Settings = settings;
+			m_Data = playerData;
 
 			DamageFlickerDuration = settings.DamageFlickerDuration;
-			_data.CurrentHealth = new ReactiveProperty<float>(settings.Health);
-			_data.CurrentHealthPercentage = new ReactiveProperty<float>(1);
-			_data.IsDead = new ReactiveProperty<bool>(false);
-			_data.EquippedWeapons = new ReactiveCollection<WeaponSetting>
+			m_Data.CurrentHealth = new ReactiveProperty<float>(settings.Health);
+			m_Data.CurrentHealthPercentage = new ReactiveProperty<float>(1);
+			m_Data.IsDead = new ReactiveProperty<bool>(false);
+			m_Data.EquippedWeapons = new ReactiveCollection<WeaponSetting>
 			{
-				_settings.GetDefaultWeaponSetting()
+				m_Settings.GetDefaultWeaponSetting()
 			};
 
 			CurrentHealth.Where(x => x <= 0).Subscribe(_ => IsDead.Value = true).AddTo(disposables);

@@ -5,23 +5,23 @@ namespace Survivors.Enemy
 {
 	public class EnemyKillCounterPresenter
 	{
-		private readonly EnemyKillCounterView _view;
-		private readonly EnemyData _model;
+		private readonly EnemyKillCounterView m_View;
+		private readonly EnemyData m_Model;
 
 		public EnemyKillCounterPresenter(EnemyData data, EnemyKillCounterView view, CompositeDisposable disposables)
 		{
-			_model = data;
-			_view = view;
+			m_Model = data;
+			m_View = view;
 
 			//Update killed enemies.
-			_model.Enemies
+			m_Model.Enemies
 				.ObserveRemove()
-				.Subscribe(_ => _model.KilledEnemies.Value++)
+				.Subscribe(_ => m_Model.KilledEnemies.Value++)
 				.AddTo(disposables);
 
 			//Update killed enemy counter text.
-			_model.KilledEnemies
-				.Subscribe(value => _view.KilledTextField.text = value.ToString())
+			m_Model.KilledEnemies
+				.Subscribe(value => m_View.KilledTextField.text = value.ToString())
 				.AddTo(disposables);
 		}
 

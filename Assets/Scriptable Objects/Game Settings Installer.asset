@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9955e7e05f0627745958831a13a773d7, type: 3}
   m_Name: Game Settings Installer
   m_EditorClassIdentifier: 
-  _enemies:
+  m_Enemies:
   - <name>k__BackingField: Slow
     <Prefab>k__BackingField: {fileID: 5933081570010237410, guid: 129b2bb3f9ca2af41be36d8e44fc185b, type: 3}
     <Color>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
@@ -37,12 +37,12 @@ MonoBehaviour:
     <Speed>k__BackingField: 2
     <DamageFlickerDuration>k__BackingField: 0.16
     <PathfindingInverval>k__BackingField: 20
-  _spawnSettings:
+  m_SpawnSettings:
     <SpawnIntervalRange>k__BackingField: {x: 0.5, y: 1.5}
     <SpawAmountRange>k__BackingField: {x: 1, y: 3}
     <Radius>k__BackingField: 20
-    <MaxSpawnAmount>k__BackingField: 150
-  _playerSettings:
+    <MaxSpawnAmount>k__BackingField: 146
+  m_PlayerSettings:
     <Health>k__BackingField: 10
     <StartWeaponIndex>k__BackingField: 0
     <baseProjectilePrefab>k__BackingField: {fileID: 2352757070529799028, guid: 1b9e8e4ca4f49ea46b2bcce8e0d89185, type: 3}

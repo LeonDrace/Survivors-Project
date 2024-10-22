@@ -375,6 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecaff99a6caf7c49af1162fcad12b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _iconField: {fileID: 4614544881934776495}
-  _cooldownField: {fileID: 6926800361663354921}
-  _nameField: {fileID: 2120368216405107127}
+  m_IconField: {fileID: 4614544881934776495}
+  m_CooldownField: {fileID: 6926800361663354921}
+  m_NameField: {fileID: 2120368216405107127}

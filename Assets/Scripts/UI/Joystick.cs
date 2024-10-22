@@ -9,9 +9,9 @@ namespace Survivors.Input
 	public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 	{
 		[SerializeField]
-		private Image _stick;
+		private Image m_Stick;
 		[SerializeField]
-		private RectTransform _stickParent;
+		private RectTransform m_StickParent;
 
 		private readonly Subject<Vector2> _onInput = new();
 		private bool _isDragging;
@@ -22,8 +22,8 @@ namespace Survivors.Input
 		{
 			if (_isDragging)
 			{
-				var stickPosition = _stickParent.InverseTransformPoint(UnityEngine.Input.mousePosition);
-				var stickParentRect = _stickParent.rect;
+				var stickPosition = m_StickParent.InverseTransformPoint(UnityEngine.Input.mousePosition);
+				var stickParentRect = m_StickParent.rect;
 
 				var radius = stickParentRect.width / 2;
 				var distance = stickPosition.magnitude;
@@ -32,8 +32,8 @@ namespace Survivors.Input
 					stickPosition = stickPosition.normalized * radius;
 				}
 
-				_stick.rectTransform.localPosition = stickPosition;
-				_onInput.OnNext(_stick.rectTransform.localPosition / radius);
+				m_Stick.rectTransform.localPosition = stickPosition;
+				_onInput.OnNext(m_Stick.rectTransform.localPosition / radius);
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace Survivors.Input
 		private void ResetStick()
 		{
 			_isDragging = false;
-			_stick.rectTransform.localPosition = Vector2.zero;
+			m_Stick.rectTransform.localPosition = Vector2.zero;
 		}
 	}
 }

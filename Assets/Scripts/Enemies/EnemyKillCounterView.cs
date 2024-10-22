@@ -6,8 +6,8 @@ namespace Survivors.Enemy
 	public class EnemyKillCounterView : MonoBehaviour
 	{
 		[SerializeField]
-		private TextMeshProUGUI _killedTextField;
+		private TextMeshProUGUI m_KilledTextField;
 
-		public TextMeshProUGUI KilledTextField => _killedTextField;
+		public TextMeshProUGUI KilledTextField => m_KilledTextField;
 	}
 }

@@ -13,24 +13,24 @@ namespace Assets.Scripts.Weapons
 		[SerializeField]
 		private Transform weaponsContainer = null;
 
-		private List<WeaponView> _weaponViews = new List<WeaponView>();
+		private List<WeaponView> m_WeaponViews = new List<WeaponView>();
 
 		public WeaponView AddWeapon(WeaponSetting weaponSetting)
 		{
 			var weaponView = Instantiate(weaponSetting.WeaponUiPrefab, weaponsContainer).GetComponent<WeaponView>();
 			weaponView.Initialize(weaponSetting);
-			_weaponViews.Add(weaponView);
+			m_WeaponViews.Add(weaponView);
 			return weaponView;
 		}
 
 		public void RemoveWeapon(WeaponSetting weaponSetting)
 		{
-			_weaponViews.Remove(GetWeapon(weaponSetting));
+			m_WeaponViews.Remove(GetWeapon(weaponSetting));
 		}
 
 		private WeaponView GetWeapon(WeaponSetting weaponSetting)
 		{
-			return _weaponViews.Find(x => x.WeaponSetting == weaponSetting);
+			return m_WeaponViews.Find(x => x.WeaponSetting == weaponSetting);
 		}
 	}
 }

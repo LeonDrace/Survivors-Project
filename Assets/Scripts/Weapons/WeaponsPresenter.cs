@@ -8,31 +8,31 @@ namespace Scripts
 {
 	public class WeaponsPresenter : ITickable
 	{
-		private readonly WeaponsView _weaponView;
-		private readonly WeaponsModel _weaponModel;
-		private readonly Transform _playerTransform;
+		private readonly WeaponsView m_WeaponView;
+		private readonly WeaponsModel m_WeaponModel;
+		private readonly Transform m_PlayerTransform;
 
 		public WeaponsPresenter(WeaponsView view, WeaponsModel model, PlayerView playerView, CompositeDisposable disposables)
 		{
-			_weaponView = view;
-			_weaponModel = model;
-			_playerTransform = playerView.transform;
+			m_WeaponView = view;
+			m_WeaponModel = model;
+			m_PlayerTransform = playerView.transform;
 
 			//Set up start weapon view.
-			foreach (var weapon in _weaponModel.WeaponBehaviors)
+			foreach (var weapon in m_WeaponModel.WeaponBehaviors)
 			{
-				var startWeapon = _weaponView.AddWeapon(weapon.WeaponSetting);
+				var startWeapon = m_WeaponView.AddWeapon(weapon.WeaponSetting);
 				weapon.Cooldown
 					.Subscribe(x => startWeapon.UpdateSlider(x))
 					.AddTo(startWeapon);
 			}
 
 			//Observe new weapons being added and create weapon view.
-			_weaponModel.WeaponBehaviors
+			m_WeaponModel.WeaponBehaviors
 				.ObserveAdd()
 				.Subscribe(x =>
 				{
-					var weaponView = _weaponView.AddWeapon(x.Value.WeaponSetting);
+					var weaponView = m_WeaponView.AddWeapon(x.Value.WeaponSetting);
 					x.Value.Cooldown
 						.Subscribe(x => weaponView.UpdateSlider(x))
 						.AddTo(weaponView);
@@ -40,17 +40,17 @@ namespace Scripts
 				.AddTo(disposables);
 
 			//Observe and remove weapon views when weapon behavior was removed.
-			_weaponModel.WeaponBehaviors
+			m_WeaponModel.WeaponBehaviors
 				.ObserveRemove()
-				.Subscribe(x => _weaponView.RemoveWeapon(x.Value.WeaponSetting))
+				.Subscribe(x => m_WeaponView.RemoveWeapon(x.Value.WeaponSetting))
 				.AddTo(disposables);
 		}
 
 		public void Tick()
 		{
-			foreach (var behavior in _weaponModel.WeaponBehaviors)
+			foreach (var behavior in m_WeaponModel.WeaponBehaviors)
 			{
-				behavior.OnTick(_playerTransform, UnityEngine.Time.deltaTime);
+				behavior.OnTick(m_PlayerTransform, UnityEngine.Time.deltaTime);
 			}
 
 		}

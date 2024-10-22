@@ -7,7 +7,7 @@ namespace Survivors.Enemy
 {
 	public class EnemiesModel
 	{
-		private readonly EnemyData _enemyData;
+		private readonly EnemyData m_EnemyData;
 
 		public EnemiesPresenter.SpawnSettings SpawnSettings { get; private set; }
 		public EnemyModel.Settings[] EnemySettings { get; private set; }
@@ -15,8 +15,8 @@ namespace Survivors.Enemy
 		public Transform PlayerTransform { get; private set; }
 		public Camera Camera { get; private set; }
 		public float RandomSpawnCooldown { get; set; }
-		public ReactiveProperty<int> KilledEnemies => _enemyData.KilledEnemies;
-		public ReactiveCollection<IEnemy> Enemies => _enemyData.Enemies;
+		public ReactiveProperty<int> KilledEnemies => m_EnemyData.KilledEnemies;
+		public ReactiveCollection<IEnemy> Enemies => m_EnemyData.Enemies;
 
 		public EnemiesModel(
 			EnemiesPresenter.SpawnSettings spawnSettings,
@@ -26,8 +26,8 @@ namespace Survivors.Enemy
 			EnemyPresenter.Factory factory,
 			PlayerView playerView)
 		{
-			_enemyData = enemyData;
-			_enemyData.KilledEnemies = new ReactiveProperty<int>(0);
+			m_EnemyData = enemyData;
+			m_EnemyData.KilledEnemies = new ReactiveProperty<int>(0);
 			SpawnSettings = spawnSettings;
 			EnemySettings = enemySettings;
 			EnemyFactory = factory;

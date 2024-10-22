@@ -8,11 +8,11 @@ namespace Scripts
 	public class ProjectileView : MonoBehaviour
 	{
 		[SerializeField]
-		private SpriteRenderer _spriteRenderer;
+		private SpriteRenderer m_SpriteRenderer;
 
-		private WeaponSetting _weaponSetting;
+		private WeaponSetting m_WeaponSetting;
 
-		public SpriteRenderer SpriteRenderer => _spriteRenderer;
+		public SpriteRenderer SpriteRenderer => m_SpriteRenderer;
 		public Vector2 StartPosition { get; set; }
 		public Vector2 TargetPosition { get; set; }
 		public Vector3 Dir { get; set; }
@@ -22,14 +22,14 @@ namespace Scripts
 		[Inject]
 		public void Construct(Vector2 startPosition, Vector2 targetPosition, WeaponSetting weaponSetting)
 		{
-			_weaponSetting = weaponSetting;
+			m_WeaponSetting = weaponSetting;
 			StartPosition = startPosition;
 			TargetPosition = targetPosition;
 
-			_weaponSetting.OnSpawnProjectile(this);
+			m_WeaponSetting.OnSpawnProjectile(this);
 
 			Observable
-				.Timer(System.TimeSpan.FromSeconds(_weaponSetting.ProjectileLifeTime))
+				.Timer(System.TimeSpan.FromSeconds(m_WeaponSetting.ProjectileLifeTime))
 				.Subscribe(x =>
 				{
 					DestroyItself();
@@ -41,18 +41,18 @@ namespace Scripts
 		{
 			CurrentLifeTime += Time.deltaTime;
 
-			if (CurrentLifeTime >= _weaponSetting.ProjectileLifeTime)
+			if (CurrentLifeTime >= m_WeaponSetting.ProjectileLifeTime)
 			{
 				DestroyItself();
 				return;
 			}
 
-			_weaponSetting.OnMoveProjectile(this);
+			m_WeaponSetting.OnMoveProjectile(this);
 		}
 
-		public void OnTriggerEnter2D(Collider2D collision) => _weaponSetting.OnProjectileHit(this, collision);
+		public void OnTriggerEnter2D(Collider2D collision) => m_WeaponSetting.OnProjectileHit(this, collision);
 
-		public void DestroyItself() => _weaponSetting.OnDestroyProjectile(this);
+		public void DestroyItself() => m_WeaponSetting.OnDestroyProjectile(this);
 
 
 		public class Factory : PlaceholderFactory<Vector2, Vector2, WeaponSetting, ProjectileView> { }

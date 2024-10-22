@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc4cc8fe9c13123418ec01fe5866cf5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _killedTextField: {fileID: 450156090527731171}
+  m_KilledTextField: {fileID: 450156090527731171}
 --- !u!114 &7023564464309454795
 MonoBehaviour:
   m_ObjectHideFlags: 0

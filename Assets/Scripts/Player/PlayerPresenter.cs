@@ -7,32 +7,32 @@ namespace Survivors.Player
 {
 	public class PlayerPresenter
 	{
-		private readonly PlayerView _view;
-		private readonly PlayerModel _model;
+		private readonly PlayerView m_View;
+		private readonly PlayerModel m_Model;
 
 		public PlayerPresenter(Joystick joystick,
 			PlayerView playerView, PlayerModel playerModel, CompositeDisposable disposables)
 		{
-			_model = playerModel;
-			_view = playerView;
+			m_Model = playerModel;
+			m_View = playerView;
 
 			//Move
 			joystick.OnInput
-				.TakeWhile(_ => !_model.IsDead.Value)
+				.TakeWhile(_ => !m_Model.IsDead.Value)
 				.Subscribe(playerView.Move)
 				.AddTo(disposables);
 
 			//Damage
-			_model.CurrentHealthPercentage
+			m_Model.CurrentHealthPercentage
 				.Subscribe(x =>
 				{
 					if (x < 1)
 					{
-						_view.DamageRenderer.enabled = true;
+						m_View.DamageRenderer.enabled = true;
 
 						Observable
-							.Timer(TimeSpan.FromSeconds(_model.DamageFlickerDuration))
-							.Subscribe(x => { _view.DamageRenderer.enabled = false; })
+							.Timer(TimeSpan.FromSeconds(m_Model.DamageFlickerDuration))
+							.Subscribe(x => { m_View.DamageRenderer.enabled = false; })
 							.AddTo(disposables);
 					}
 
@@ -40,18 +40,18 @@ namespace Survivors.Player
 				.AddTo(disposables);
 
 			//Current health
-			_model.CurrentHealthPercentage
-				.Subscribe(x => _view.HealthSlider.value = x);
+			m_Model.CurrentHealthPercentage
+				.Subscribe(x => m_View.HealthSlider.value = x);
 		}
 
 		public void DealDamge(float damage)
 		{
-			_model.CurrentHealth.Value -= damage;
+			m_Model.CurrentHealth.Value -= damage;
 		}
 
 		public Transform GetPlayerTransform()
 		{
-			return _view.transform;
+			return m_View.transform;
 		}
 	}
 }

@@ -7,6 +7,5 @@ namespace Survivors.Data
 	{
 		public ReactiveProperty<int> KilledEnemies { get; set; }
 		public ReactiveCollection<IEnemy> Enemies { get; set; } = new ReactiveCollection<IEnemy>();
-
 	}
 }

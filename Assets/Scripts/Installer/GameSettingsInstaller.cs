@@ -1,6 +1,7 @@
 ﻿using Survivors.Enemy;
 using Survivors.Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Survivors.Installer
@@ -8,18 +9,18 @@ namespace Survivors.Installer
 	[CreateAssetMenu]
 	public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller>
 	{
-		[SerializeField]
-		private EnemyModel.Settings[] _enemies;
-		[SerializeField]
-		private EnemiesPresenter.SpawnSettings _spawnSettings;
-		[SerializeField]
-		private PlayerModel.PlayerSettings _playerSettings;
+		[SerializeField, FormerlySerializedAs("_enemies")]
+		private EnemyModel.Settings[] m_Enemies;
+		[SerializeField, FormerlySerializedAs("_spawnSettings")]
+		private EnemiesPresenter.SpawnSettings m_SpawnSettings;
+		[SerializeField, FormerlySerializedAs("_playerSettings")]
+		private PlayerModel.PlayerSettings m_PlayerSettings;
 
 		public override void InstallBindings()
 		{
-			Container.BindInstance(_enemies);
-			Container.BindInstance(_spawnSettings);
-			Container.BindInstance(_playerSettings);
+			Container.BindInstance(m_Enemies);
+			Container.BindInstance(m_SpawnSettings);
+			Container.BindInstance(m_PlayerSettings);
 		}
 	}
 }

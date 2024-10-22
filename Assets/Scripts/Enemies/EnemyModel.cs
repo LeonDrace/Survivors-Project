@@ -8,43 +8,43 @@ namespace Survivors.Enemy
 	{
 		public Transform Target { get; private set; }
 		public float Cooldown { get; set; }
-		public float Range => _settings.Range;
+		public float Range => m_Settings.Range;
 		public int Interval { get; set; }
-		public float Damage => _settings.Damage;
+		public float Damage => m_Settings.Damage;
 		public ReactiveProperty<float> CurrentHealth { get; private set; } = new ReactiveProperty<float>();
 		public ReactiveProperty<bool> IsDead = new ReactiveProperty<bool>(false);
 
-		private Settings _settings;
-		private readonly PlayerPresenter _player;
-		private readonly CompositeDisposable _disposables;
+		private Settings m_Settings;
+		private readonly PlayerPresenter m_Player;
+		private readonly CompositeDisposable m_Disposables;
 
 		public EnemyModel(PlayerView playerView, PlayerPresenter playerPresenter, CompositeDisposable disposables)
 		{
 			Target = playerView.transform;
-			_player = playerPresenter;
-			_disposables = disposables;
+			m_Player = playerPresenter;
+			m_Disposables = disposables;
 		}
 
 		public void SetSettings(Settings settings)
 		{
-			_settings = settings;
-			CurrentHealth.Value = _settings.Health;
-			CurrentHealth.Where(x => x <= 0).Subscribe(_ => IsDead.Value = true).AddTo(_disposables);
+			m_Settings = settings;
+			CurrentHealth.Value = m_Settings.Health;
+			CurrentHealth.Where(x => x <= 0).Subscribe(_ => IsDead.Value = true).AddTo(m_Disposables);
 		}
 
 		public void ResetCooldown()
 		{
-			Cooldown = _settings.DamageCooldown;
+			Cooldown = m_Settings.DamageCooldown;
 		}
 
 		public void ResetInterval()
 		{
-			Interval = _settings.PathfindingInverval;
+			Interval = m_Settings.PathfindingInverval;
 		}
 
 		public void DealDamageToPlayer(float damage)
 		{
-			_player.DealDamge(damage);
+			m_Player.DealDamge(damage);
 		}
 
 		[System.Serializable]
