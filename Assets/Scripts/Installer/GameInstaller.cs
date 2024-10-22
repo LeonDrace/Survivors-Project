@@ -1,4 +1,3 @@
-using Assets.Scripts.Enemies;
 using Scripts;
 using Survivors.Data;
 using Survivors.Enemy;

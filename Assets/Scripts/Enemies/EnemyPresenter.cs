@@ -1,10 +1,9 @@
-﻿using Survivors.Enemy;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
-namespace Assets.Scripts.Enemies
+namespace Survivors.Enemy
 {
-	public class EnemyPresenter
+	public class EnemyPresenter : IEnemy
 	{
 		private readonly EnemyModel _model;
 		private readonly EnemyView _view;

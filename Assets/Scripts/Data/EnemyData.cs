@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Survivors.Enemy;
+using UniRx;
 
 namespace Survivors.Data
 {
 	public class EnemyData
 	{
+		public ReactiveProperty<int> KilledEnemies { get; set; }
+		public ReactiveCollection<IEnemy> Enemies { get; set; } = new ReactiveCollection<IEnemy>();
+
 	}
 }

@@ -2,7 +2,6 @@ using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.AI;
-using Zenject;
 
 namespace Survivors.Enemy
 {

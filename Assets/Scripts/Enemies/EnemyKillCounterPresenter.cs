@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Survivors.Data;
 using UniRx;
 
 namespace Survivors.Enemy
@@ -10,11 +6,11 @@ namespace Survivors.Enemy
 	public class EnemyKillCounterPresenter
 	{
 		private readonly EnemyKillCounterView _view;
-		private readonly EnemiesModel _model;
+		private readonly EnemyData _model;
 
-		public EnemyKillCounterPresenter(EnemiesModel model, EnemyKillCounterView view, CompositeDisposable disposables)
+		public EnemyKillCounterPresenter(EnemyData data, EnemyKillCounterView view, CompositeDisposable disposables)
 		{
-			_model = model;
+			_model = data;
 			_view = view;
 
 			//Update killed enemies.
