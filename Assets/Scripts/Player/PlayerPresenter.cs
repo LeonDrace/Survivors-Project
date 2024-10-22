@@ -1,4 +1,3 @@
-using Scripts;
 using Survivors.Input;
 using System;
 using UniRx;
@@ -11,7 +10,8 @@ namespace Survivors.Player
 		private readonly PlayerView _view;
 		private readonly PlayerModel _model;
 
-		public PlayerPresenter(Joystick joystick, PlayerView playerView, PlayerModel playerModel, CompositeDisposable disposer)
+		public PlayerPresenter(Joystick joystick,
+			PlayerView playerView, PlayerModel playerModel, CompositeDisposable disposables)
 		{
 			_model = playerModel;
 			_view = playerView;
@@ -20,7 +20,7 @@ namespace Survivors.Player
 			joystick.OnInput
 				.TakeWhile(_ => !_model.IsDead.Value)
 				.Subscribe(playerView.Move)
-				.AddTo(disposer);
+				.AddTo(disposables);
 
 			//Damage
 			_model.CurrentHealthPercentage
@@ -33,24 +33,15 @@ namespace Survivors.Player
 						Observable
 							.Timer(TimeSpan.FromSeconds(_model.DamageFlickerDuration))
 							.Subscribe(x => { _view.DamageRenderer.enabled = false; })
-							.AddTo(disposer);
+							.AddTo(disposables);
 					}
 
 				})
-				.AddTo(disposer);
+				.AddTo(disposables);
 
 			//Current health
 			_model.CurrentHealthPercentage
 				.Subscribe(x => _view.HealthSlider.value = x);
-
-			//Death
-			_model.IsDead
-				.Where(isDead => isDead == true)
-				.Subscribe(x =>
-				{
-					_view.RestartScreen.gameObject.SetActive(true);
-				})
-				.AddTo(disposer);
 		}
 
 		public void DealDamge(float damage)

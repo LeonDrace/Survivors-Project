@@ -11,11 +11,8 @@ namespace Survivors.Player
 		private Slider _healthSlider;
 		[SerializeField]
 		private SpriteRenderer _damageRenderer;
-		[SerializeField]
-		private GameObject _restartScreen;
 
 		public Slider HealthSlider => _healthSlider;
-		public GameObject RestartScreen => _restartScreen;
 		public SpriteRenderer DamageRenderer => _damageRenderer;
 
 		public void Move(Vector2 direction)

@@ -7,18 +7,18 @@ using UnityEngine.UI;
 public class RestartButton : MonoBehaviour
 {
 	[SerializeField]
-	private Button _button;
+	private Button m_Button;
 	[SerializeField]
-	private string _sceneName = "SampleScene";
+	private string m_SceneName = "SampleScene";
 
 	private void Awake()
 	{
-		_button
+		m_Button
 			.OnClickAsObservable()
 			.Subscribe(_ =>
 			{
-				SceneManager.LoadScene(_sceneName);
-				_button.interactable = false;
+				SceneManager.LoadScene(m_SceneName);
+				m_Button.interactable = false;
 			});
 	}
 }

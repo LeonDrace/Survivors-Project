@@ -2,6 +2,7 @@ using Scripts;
 using Survivors.Data;
 using Survivors.Enemy;
 using Survivors.Player;
+using Survivors.UI;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -23,6 +24,7 @@ namespace Survivors.Installer
 			InstallGameState();
 			InstallPlayer();
 			InstallEnemies();
+			InstallRestartUI();
 		}
 
 		private void InstallMisc()
@@ -57,6 +59,12 @@ namespace Survivors.Installer
 			Container.Bind<EnemyModel>().AsTransient();
 			Container.BindFactory<Vector2, EnemyModel.Settings, EnemyPresenter, EnemyPresenter.Factory>();
 			Container.Bind<EnemyKillCounterPresenter>().AsSingle().NonLazy();
+		}
+
+		private void InstallRestartUI()
+		{
+			Container.Bind<RestartScreenModel>().AsSingle();
+			Container.Bind<RestartScreenPresenter>().AsSingle().NonLazy();
 		}
 
 		private void OnDestroy()
