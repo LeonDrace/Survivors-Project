@@ -8,7 +8,7 @@ namespace Survivors.Installer
 	public class GameInstaller : MonoInstaller<GameInstaller>
 	{
 		[Inject]
-		private PlayerModel.PlayerSettings m_PlayerSettings;
+		private CharacterSettings m_PlayerSettings;
 
 		private readonly CompositeDisposable m_Disposer = new();
 

@@ -11,7 +11,7 @@ namespace Survivors.Extensions
 {
 	public static class InstallPlayerExtension
 	{
-		public static DiContainer InstallPlayer(this DiContainer container, PlayerModel.PlayerSettings settings)
+		public static DiContainer InstallPlayer(this DiContainer container, CharacterSettings settings)
 		{
 			container.Bind<PlayerModel>().AsSingle().NonLazy();
 			container.Bind<WeaponsModel>().AsSingle().NonLazy();

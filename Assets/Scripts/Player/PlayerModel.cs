@@ -8,7 +8,7 @@ namespace Survivors.Player
 {
 	public class PlayerModel
 	{
-		private readonly PlayerSettings m_Settings;
+		private readonly CharacterSettings m_Settings;
 		private readonly PlayerData m_Data;
 
 		public ReactiveProperty<float> CurrentHealth => m_Data.CurrentHealth;
@@ -17,7 +17,7 @@ namespace Survivors.Player
 		public ReactiveCollection<WeaponSetting> EquippedWeapons => m_Data.EquippedWeapons;
 		public float DamageFlickerDuration { get; set; }
 
-		public PlayerModel(PlayerSettings settings, PlayerData playerData, CompositeDisposable disposables)
+		public PlayerModel(CharacterSettings settings, PlayerData playerData, CompositeDisposable disposables)
 		{
 			m_Settings = settings;
 			m_Data = playerData;
@@ -33,26 +33,6 @@ namespace Survivors.Player
 
 			CurrentHealth.Where(x => x <= 0).Subscribe(_ => IsDead.Value = true).AddTo(disposables);
 			CurrentHealth.Subscribe(x => CurrentHealthPercentage.Value = x / settings.Health).AddTo(disposables);
-		}
-
-		[System.Serializable]
-		public class PlayerSettings
-		{
-			[field: SerializeField]
-			public int Health { get; private set; } = 10;
-			[field: SerializeField]
-			public int StartWeaponIndex { get; private set; } = 0;
-			[field: SerializeField]
-			public GameObject baseProjectilePrefab { get; private set; }
-			[field: SerializeField]
-			public WeaponSetting[] Weapons { get; private set; }
-			[field: SerializeField]
-			public float DamageFlickerDuration { get; private set; }
-
-			public WeaponSetting GetDefaultWeaponSetting()
-			{
-				return Weapons[StartWeaponIndex];
-			}
 		}
 	}
 }

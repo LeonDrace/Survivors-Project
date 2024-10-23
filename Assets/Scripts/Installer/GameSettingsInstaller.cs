@@ -10,17 +10,17 @@ namespace Survivors.Installer
 	public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller>
 	{
 		[SerializeField]
-		private EnemySettings[] m_Enemies;
-		[SerializeField]
 		private SpawnSettings m_SpawnSettings;
+		[SerializeField]
+		private EnemySettings[] m_EnemySettings;
 		[SerializeField, FormerlySerializedAs("_playerSettings")]
-		private PlayerModel.PlayerSettings m_PlayerSettings;
+		private CharacterSettings m_CharacterSettings;
 
 		public override void InstallBindings()
 		{
-			Container.BindInstance(m_Enemies);
+			Container.BindInstance(m_EnemySettings);
 			Container.BindInstance(m_SpawnSettings);
-			Container.BindInstance(m_PlayerSettings);
+			Container.BindInstance(m_CharacterSettings);
 		}
 	}
 }
