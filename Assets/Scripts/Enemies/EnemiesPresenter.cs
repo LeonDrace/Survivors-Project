@@ -76,28 +76,5 @@ namespace Survivors.Enemy
 			Vector3 topRight = value.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
 			return (new Rect(bottomLeft.x, bottomLeft.y, topRight.x * 2f, topRight.y * 2f));
 		}
-
-		[System.Serializable]
-		public class SpawnSettings
-		{
-			[field: SerializeField]
-			private Vector2 SpawnIntervalRange { get; set; } = new UnityEngine.Vector2(0.5f, 1.5f);
-			[field: SerializeField]
-			private Vector2Int SpawAmountRange { get; set; } = new Vector2Int(1, 5);
-			[field: SerializeField]
-			public float Radius { get; private set; } = 20;
-			[field: SerializeField]
-			public int MaxSpawnAmount { get; private set; }
-
-			public int GetSpawnAmount()
-			{
-				return Random.Range(SpawAmountRange.x, SpawAmountRange.y);
-			}
-
-			public float GetRandomSpawnCooldown()
-			{
-				return Random.Range(SpawnIntervalRange.x, SpawnIntervalRange.y);
-			}
-		}
 	}
 }

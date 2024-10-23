@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9955e7e05f0627745958831a13a773d7, type: 3}
-  m_Name: Game Settings Installer
+  m_Name: GameSettingsInstaller
   m_EditorClassIdentifier: 
   m_Enemies:
   - <name>k__BackingField: Slow

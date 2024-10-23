@@ -6,13 +6,13 @@ using Zenject;
 
 namespace Survivors.Installer
 {
-	[CreateAssetMenu]
+	[CreateAssetMenu(fileName = "Survivors/GamesettingsInstaller", menuName = "Survivors/Game Settings Installer")]
 	public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller>
 	{
 		[SerializeField, FormerlySerializedAs("_enemies")]
 		private EnemyModel.Settings[] m_Enemies;
-		[SerializeField, FormerlySerializedAs("_spawnSettings")]
-		private EnemiesPresenter.SpawnSettings m_SpawnSettings;
+		[SerializeField]
+		private SpawnSettings m_SpawnSettings;
 		[SerializeField, FormerlySerializedAs("_playerSettings")]
 		private PlayerModel.PlayerSettings m_PlayerSettings;
 

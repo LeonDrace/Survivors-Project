@@ -9,7 +9,7 @@ namespace Survivors.Enemy
 	{
 		private readonly EnemyData m_EnemyData;
 
-		public EnemiesPresenter.SpawnSettings SpawnSettings { get; private set; }
+		public SpawnSettings SpawnSettings { get; private set; }
 		public EnemyModel.Settings[] EnemySettings { get; private set; }
 		public EnemyPresenter.Factory EnemyFactory { get; private set; }
 		public Transform PlayerTransform { get; private set; }
@@ -19,7 +19,7 @@ namespace Survivors.Enemy
 		public ReactiveCollection<IEnemy> Enemies => m_EnemyData.Enemies;
 
 		public EnemiesModel(
-			EnemiesPresenter.SpawnSettings spawnSettings,
+			SpawnSettings spawnSettings,
 			EnemyModel.Settings[] enemySettings,
 			EnemyData enemyData,
 			PlayerData playerData,
