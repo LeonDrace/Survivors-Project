@@ -19,9 +19,9 @@ namespace Survivors.Enemy
 		public event Action<float> onDamage;
 
 		private bool m_ShowsHitEffect = false;
-		private EnemyModel.Settings m_Settings;
+		private EnemySettings m_Settings;
 
-		public void Construct(Vector2 position, EnemyModel.Settings settings)
+		public void Construct(Vector2 position, EnemySettings settings)
 		{
 			m_Settings = settings;
 			transform.position = new Vector3(position.x, position.y, 0);

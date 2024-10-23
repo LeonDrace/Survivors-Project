@@ -9,8 +9,8 @@ namespace Survivors.Installer
 	[CreateAssetMenu(fileName = "Survivors/GamesettingsInstaller", menuName = "Survivors/Game Settings Installer")]
 	public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller>
 	{
-		[SerializeField, FormerlySerializedAs("_enemies")]
-		private EnemyModel.Settings[] m_Enemies;
+		[SerializeField]
+		private EnemySettings[] m_Enemies;
 		[SerializeField]
 		private SpawnSettings m_SpawnSettings;
 		[SerializeField, FormerlySerializedAs("_playerSettings")]

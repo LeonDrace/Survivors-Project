@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SpawnSettings
   m_EditorClassIdentifier: 
   <SpawnIntervalRange>k__BackingField: {x: 0.5, y: 1.5}
-  <SpawAmountRange>k__BackingField: {x: 1, y: 5}
+  <SpawAmountRange>k__BackingField: {x: 1, y: 3}
   <Radius>k__BackingField: 20
-  <MaxSpawnAmount>k__BackingField: 0
+  <MaxSpawnAmount>k__BackingField: 150

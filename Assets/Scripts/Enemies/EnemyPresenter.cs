@@ -8,7 +8,7 @@ namespace Survivors.Enemy
 		private readonly EnemyModel m_Model;
 		private readonly EnemyView m_View;
 
-		public EnemyPresenter(Vector2 position, EnemyModel.Settings settings, EnemyModel model)
+		public EnemyPresenter(Vector2 position, EnemySettings settings, EnemyModel model)
 		{
 			m_Model = model;
 			m_Model.SetSettings(settings);
@@ -54,7 +54,7 @@ namespace Survivors.Enemy
 			m_View.DestroySelf();
 		}
 
-		public class Factory : PlaceholderFactory<Vector2, EnemyModel.Settings, EnemyPresenter>
+		public class Factory : PlaceholderFactory<Vector2, EnemySettings, EnemyPresenter>
 		{
 
 		}

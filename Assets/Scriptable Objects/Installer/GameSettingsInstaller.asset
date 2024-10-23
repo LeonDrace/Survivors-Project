@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9955e7e05f0627745958831a13a773d7, type: 3}
+  m_Name: GameSettingsInstaller
+  m_EditorClassIdentifier: 
+  m_Enemies:
+  - {fileID: 11400000, guid: 0ddadade900e1944590bfa6c33ac5ce3, type: 2}
+  - {fileID: 11400000, guid: 4e528165e0980eb4d98a08dc8adf8519, type: 2}
+  m_SpawnSettings: {fileID: 11400000, guid: 9285f13678199bc46b0cca2220ff6f64, type: 2}
+  m_PlayerSettings:
+    <Health>k__BackingField: 10
+    <StartWeaponIndex>k__BackingField: 0
+    <baseProjectilePrefab>k__BackingField: {fileID: 2352757070529799028, guid: 1b9e8e4ca4f49ea46b2bcce8e0d89185, type: 3}
+    <Weapons>k__BackingField:
+    - {fileID: 11400000, guid: 4314096209454974f9cc97be16ead884, type: 2}
+    <DamageFlickerDuration>k__BackingField: 0.16

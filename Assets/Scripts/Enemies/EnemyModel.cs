@@ -14,7 +14,7 @@ namespace Survivors.Enemy
 		public ReactiveProperty<float> CurrentHealth { get; private set; } = new ReactiveProperty<float>();
 		public ReactiveProperty<bool> IsDead = new ReactiveProperty<bool>(false);
 
-		private Settings m_Settings;
+		private EnemySettings m_Settings;
 		private readonly PlayerPresenter m_Player;
 		private readonly CompositeDisposable m_Disposables;
 
@@ -25,7 +25,7 @@ namespace Survivors.Enemy
 			m_Disposables = disposables;
 		}
 
-		public void SetSettings(Settings settings)
+		public void SetSettings(EnemySettings settings)
 		{
 			m_Settings = settings;
 			CurrentHealth.Value = m_Settings.Health;
@@ -45,35 +45,6 @@ namespace Survivors.Enemy
 		public void DealDamageToPlayer(float damage)
 		{
 			m_Player.DealDamge(damage);
-		}
-
-		[System.Serializable]
-		public class Settings
-		{
-			[field: SerializeField]
-			public string name { get; private set; } = "New";
-			[field: SerializeField]
-			public GameObject Prefab { get; private set; }
-			[field: SerializeField]
-			public Color Color { get; private set; }
-			[field: SerializeField]
-			public Sprite Sprite { get; private set; }
-			[field: SerializeField]
-			public float Health { get; private set; } = 3;
-			[field: SerializeField]
-			public float StoppingDistance { get; private set; } = 1;
-			[field: SerializeField]
-			public float Range { get; private set; } = 1;
-			[field: SerializeField]
-			public float Damage { get; private set; } = 1;
-			[field: SerializeField]
-			public float DamageCooldown { get; private set; } = 1;
-			[field: SerializeField]
-			public float Speed { get; private set; } = 1.75f;
-			[field: SerializeField]
-			public float DamageFlickerDuration { get; private set; } = 0.16f;
-			[field: SerializeField]
-			public int PathfindingInverval { get; private set; } = 20;
 		}
 	}
 }

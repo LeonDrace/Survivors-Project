@@ -10,7 +10,7 @@ namespace Survivors.Enemy
 		private readonly EnemyData m_EnemyData;
 
 		public SpawnSettings SpawnSettings { get; private set; }
-		public EnemyModel.Settings[] EnemySettings { get; private set; }
+		public EnemySettings[] EnemySettings { get; private set; }
 		public EnemyPresenter.Factory EnemyFactory { get; private set; }
 		public Transform PlayerTransform { get; private set; }
 		public Camera Camera { get; private set; }
@@ -20,7 +20,7 @@ namespace Survivors.Enemy
 
 		public EnemiesModel(
 			SpawnSettings spawnSettings,
-			EnemyModel.Settings[] enemySettings,
+			EnemySettings[] enemySettings,
 			EnemyData enemyData,
 			PlayerData playerData,
 			EnemyPresenter.Factory factory,
