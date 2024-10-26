@@ -1,4 +1,4 @@
-using Scripts;
+using Survivors.Weapons;
 using UnityEngine;
 
 namespace Survivors.Player
@@ -12,16 +12,12 @@ namespace Survivors.Player
 		public float DamageFlickerDuration { get; private set; }
 
 		[field: SerializeField, Header("Weapon")]
-		public int StartWeaponIndex { get; private set; } = 0;
-		[field: SerializeField]
-		public GameObject baseProjectilePrefab { get; private set; }
-		[field: SerializeField]
-		public WeaponSetting[] Weapons { get; private set; }
+		public WeaponSetting StartWeapon { get; private set; }
 
 
 		public WeaponSetting GetDefaultWeaponSetting()
 		{
-			return Weapons[StartWeaponIndex];
+			return StartWeapon;
 		}
 	}
 }

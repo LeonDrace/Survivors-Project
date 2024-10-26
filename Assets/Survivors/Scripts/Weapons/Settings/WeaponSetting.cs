@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 
-namespace Scripts
+namespace Survivors.Weapons
 {
-	public abstract class WeaponSetting : ScriptableObject
+	[CreateAssetMenu(fileName = "WeaponSettings", menuName = "Survivors/Weapon Settings")]
+	public class WeaponSetting : ScriptableObject
 	{
 		[field: SerializeField]
 		public string WeaponName { get; private set; } = "New";
 		[field: SerializeField]
+		public GameObject ProjectilePrefab { get; private set; }
+		[field: SerializeField]
 		public GameObject WeaponUiPrefab { get; private set; }
+		[field: SerializeField]
+		public ProjectileType ProjectileType { get; private set; }
 		[field: SerializeField]
 		public float Damage { get; private set; } = 1;
 		[field: SerializeField]
@@ -30,11 +35,12 @@ namespace Scripts
 		public float ProjectileLifeTime { get; private set; }
 		[field: SerializeField]
 		public int Projectiles { get; private set; }
+	}
 
-		public abstract void OnSpawnProjectile(ProjectileView projectile);
-		public abstract void OnMoveProjectile(ProjectileView projectile);
-		public abstract void OnProjectileHit(ProjectileView projectile, Collider2D collision);
-		public abstract void OnDestroyProjectile(ProjectileView projectile);
+	public enum ProjectileType
+	{
+		None = 0,
+		Missile = 1,
 	}
 }
 

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts
+namespace Survivors.Weapons
 {
 	public class WeaponView : MonoBehaviour
 	{

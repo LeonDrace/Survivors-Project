@@ -9,19 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00ea9b43d5133534fa8dd3ec816863dc, type: 3}
-  m_Name: Missile Weapon Setting
+  m_Script: {fileID: 11500000, guid: 9652df9db93046840834e84bc383443c, type: 3}
+  m_Name: WeaponSettings
   m_EditorClassIdentifier: 
   <WeaponName>k__BackingField: Arcane Staff
+  <ProjectilePrefab>k__BackingField: {fileID: 2352757070529799028, guid: 1b9e8e4ca4f49ea46b2bcce8e0d89185, type: 3}
   <WeaponUiPrefab>k__BackingField: {fileID: 9184050950930488084, guid: 1cdad9b7549f13f49842cb6b62dd9ca2, type: 3}
+  <ProjectileType>k__BackingField: 1
   <Damage>k__BackingField: 1
   <Cooldown>k__BackingField: 1
-  <Range>k__BackingField: 8
+  <Range>k__BackingField: 6
   <ProjectileSpawnRadius>k__BackingField: 1
-  <ProjectileSprite>k__BackingField: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  <ProjectileColor>k__BackingField: {r: 0.5191598, g: 0, b: 1, a: 1}
-  <ProjectileSize>k__BackingField: {x: 0.3, y: 0.3}
-  <ProjectileSpeed>k__BackingField: 80
+  <ProjectileSprite>k__BackingField: {fileID: -2413806693520163455, guid: 4c8f420b2e70e0b4693bee167e7be7c3, type: 3}
+  <ProjectileColor>k__BackingField: {r: 0.5262456, g: 0, b: 1, a: 1}
+  <ProjectileSize>k__BackingField: {x: 0.5, y: 0.5}
+  <ProjectileSpeed>k__BackingField: 500
   <SpeedCurve>k__BackingField:
     serializedVersion: 2
     m_Curve:
@@ -35,19 +37,10 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.3941188
-      value: 0.5318724
-      inSlope: 2.5356145
-      outSlope: 2.5356145
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.097353555
-      outWeight: 0.07487319
-    - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -55,5 +48,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  <ProjectileLifeTime>k__BackingField: 2.5
-  <Projectiles>k__BackingField: 2
+  <ProjectileLifeTime>k__BackingField: 1.97
+  <Projectiles>k__BackingField: 1

@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Button: {fileID: 9145959909649455257}
-  m_SceneName: SampleScene
+  m_SceneName: GameScene
 --- !u!1 &8255932641160372854
 GameObject:
   m_ObjectHideFlags: 0

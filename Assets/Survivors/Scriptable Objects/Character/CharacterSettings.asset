@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 10
   <DamageFlickerDuration>k__BackingField: 0.16
-  <StartWeaponIndex>k__BackingField: 0
-  <baseProjectilePrefab>k__BackingField: {fileID: 2352757070529799028, guid: 1b9e8e4ca4f49ea46b2bcce8e0d89185, type: 3}
-  <Weapons>k__BackingField:
-  - {fileID: 11400000, guid: 4314096209454974f9cc97be16ead884, type: 2}
+  <BaseProjectilePrefab>k__BackingField: {fileID: 2352757070529799028, guid: 1b9e8e4ca4f49ea46b2bcce8e0d89185, type: 3}
+  <StartWeapon>k__BackingField: {fileID: 11400000, guid: d26becf899e8337458abf5e0995b93ca, type: 2}

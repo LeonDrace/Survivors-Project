@@ -1,7 +1,7 @@
-﻿using Survivors.Player;
+﻿using Survivors.Data;
 using UniRx;
 
-namespace Scripts
+namespace Survivors.Weapons
 {
 	public class WeaponsModel
 	{
@@ -9,20 +9,20 @@ namespace Scripts
 
 		public ReactiveCollection<WeaponBehavior> WeaponBehaviors = new ReactiveCollection<WeaponBehavior>();
 
-		public WeaponsModel(PlayerModel playerModel, WeaponBehavior.Factory factory, CompositeDisposable disposables)
+		public WeaponsModel(PlayerData playerData, WeaponBehavior.Factory factory, CompositeDisposable disposables)
 		{
 			m_Factory = factory;
-			foreach (var weapon in playerModel.EquippedWeapons)
+			foreach (var weapon in playerData.EquippedWeapons)
 			{
 				WeaponBehaviors.Add(m_Factory.Create(weapon));
 			}
 
-			playerModel.EquippedWeapons
+			playerData.EquippedWeapons
 				.ObserveAdd()
 				.Subscribe(weapon => WeaponBehaviors.Add(m_Factory.Create(weapon.Value)))
 				.AddTo(disposables);
 
-			playerModel.EquippedWeapons
+			playerData.EquippedWeapons
 				.ObserveRemove()
 				.Subscribe(weapon =>
 				{

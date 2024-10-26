@@ -1,12 +1,7 @@
-﻿using Scripts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Weapons
+namespace Survivors.Weapons
 {
 	public class WeaponsView : MonoBehaviour
 	{

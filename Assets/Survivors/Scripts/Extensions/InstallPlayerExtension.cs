@@ -1,9 +1,5 @@
-using Scripts;
 using Survivors.Player;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.Contracts;
+using Survivors.Weapons;
 using UnityEngine;
 using Zenject;
 
@@ -18,10 +14,7 @@ namespace Survivors.Extensions
 			container.Bind<PlayerPresenter>().AsSingle().NonLazy();
 			container.BindInterfacesAndSelfTo<WeaponsPresenter>().AsSingle();
 			container.BindFactory<WeaponSetting, WeaponBehavior, WeaponBehavior.Factory>();
-			container.BindFactory<Vector2, Vector2, WeaponSetting, ProjectileView, ProjectileView.Factory>()
-				.FromComponentInNewPrefab(settings.baseProjectilePrefab)
-				.WithGameObjectName("Projectile")
-				.UnderTransformGroup("Projectiles");
+			container.Bind<ProjectileFactory>().AsSingle().NonLazy();
 
 			return container;
 		}
