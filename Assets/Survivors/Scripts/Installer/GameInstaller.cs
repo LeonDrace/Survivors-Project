@@ -7,16 +7,13 @@ namespace Survivors.Installer
 {
 	public class GameInstaller : MonoInstaller<GameInstaller>
 	{
-		[Inject]
-		private CharacterSettings m_PlayerSettings;
-
 		private readonly CompositeDisposable m_Disposer = new();
 
 		public override void InstallBindings()
 		{
 			Container.BindInstance(m_Disposer);
 			Container.InstallGameState();
-			Container.InstallPlayer(m_PlayerSettings);
+			Container.InstallPlayer();
 			Container.InstallEnemy();
 			Container.InstallRestart();
 		}

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,16 +14,16 @@ namespace Survivors.Weapons
 		[SerializeField]
 		private TextMeshProUGUI m_NameField;
 
-		public WeaponSetting WeaponSetting { get; private set; }
+		public Guid Id { get; private set; }
 
-		public void Initialize(WeaponSetting weaponSetting)
+		public void Initialize(Guid id, Sprite sprite, Color color, string name)
 		{
-			WeaponSetting = weaponSetting;
+			Id = id;
 			m_CooldownField.fillAmount = 0;
-			m_CooldownField.sprite = weaponSetting.ProjectileSprite;
-			m_IconField.sprite = weaponSetting.ProjectileSprite;
-			m_IconField.color = weaponSetting.ProjectileColor;
-			m_NameField.text = weaponSetting.WeaponName;
+			m_CooldownField.sprite = sprite;
+			m_IconField.sprite = sprite;
+			m_IconField.color = color;
+			m_NameField.text = name;
 		}
 
 		public void UpdateSlider(float value)

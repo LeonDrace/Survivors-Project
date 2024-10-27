@@ -8,20 +8,16 @@ namespace Survivors.Weapons
 		private readonly ProjectileModel m_Model;
 		private readonly ProjectileView m_View;
 
-		public MissileProjectilePresenter(Vector3 startPos, Vector3 targetrPos, WeaponSetting weaponSetting)
+		public MissileProjectilePresenter(ProjectileModel model, ProjectileView view)
 		{
-			m_Model = new ProjectileModel(weaponSetting);
-			m_Model.StartPosition = startPos;
-			m_Model.TargetPosition = targetrPos;
-			m_View = GameObject.Instantiate(weaponSetting.ProjectilePrefab).GetComponent<ProjectileView>();
+			m_Model = model;
+			m_View = view;
 			OnSpawnProjectile();
-
-			m_View.OnCollision += OnHit;
 		}
 
 		private void OnSpawnProjectile()
 		{
-			Vector3 randomPos = Random.insideUnitSphere * m_Model.WeaponSetting.ProjectileSpawnRadius;
+			Vector3 randomPos = Random.insideUnitSphere * m_Model.SpawnRadius;
 			m_View.transform.position = new Vector3(
 				randomPos.x + m_Model.StartPosition.x,
 				randomPos.y + m_Model.StartPosition.y,
@@ -29,9 +25,11 @@ namespace Survivors.Weapons
 			m_Model.Dir = (m_Model.TargetPosition - m_Model.StartPosition).normalized;
 
 			SpriteRenderer spriteRenderer = m_View.SpriteRenderer;
-			spriteRenderer.color = m_Model.WeaponSetting.ProjectileColor;
-			spriteRenderer.sprite = m_Model.WeaponSetting.ProjectileSprite;
-			spriteRenderer.transform.localScale = m_Model.WeaponSetting.ProjectileSize;
+			spriteRenderer.color = m_Model.Color;
+			spriteRenderer.sprite = m_Model.Sprite;
+			spriteRenderer.transform.localScale = m_Model.Size;
+
+			m_View.OnCollision += OnHit;
 		}
 
 		public void OnTick()
@@ -44,8 +42,8 @@ namespace Survivors.Weapons
 		{
 			if (m_Model.IsDead) return;
 
-			Vector3 speed = m_Model.Dir * m_Model.WeaponSetting.ProjectileSpeed
-				* Time.deltaTime * m_Model.WeaponSetting.SpeedCurve.Evaluate(m_Model.CurrentLifeTime / m_Model.LifeTime);
+			Vector3 speed = m_Model.Dir * m_Model.Speed
+				* Time.deltaTime * m_Model.AnimationCurve.Evaluate(m_Model.CurrentLifeTime / m_Model.LifeTime);
 			m_View.transform.position = m_View.transform.position + speed;
 		}
 
@@ -62,7 +60,7 @@ namespace Survivors.Weapons
 
 		public void OnHit(Collider2D collision)
 		{
-			collision.gameObject.GetComponent<EnemyView>().DealDamage(m_Model.WeaponSetting.Damage);
+			collision.gameObject.GetComponent<EnemyView>().DealDamage(m_Model.Damage);
 			Destroy();
 		}
 

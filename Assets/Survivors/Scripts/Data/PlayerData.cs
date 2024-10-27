@@ -12,7 +12,7 @@ namespace Survivors.Data
 		public ReactiveProperty<float> CurrentHealth { get; set; }
 		public ReactiveProperty<float> CurrentHealthPercentage { get; set; }
 		public ReactiveProperty<bool> IsDead { get; set; }
-		public ReactiveCollection<WeaponSetting> EquippedWeapons { get; set; } = new ReactiveCollection<WeaponSetting>();
+		public ReactiveCollection<WeaponBehavior> EquippedWeapons { get; set; } = new ReactiveCollection<WeaponBehavior>();
 
 		public PlayerData(PlayerView playerView)
 		{

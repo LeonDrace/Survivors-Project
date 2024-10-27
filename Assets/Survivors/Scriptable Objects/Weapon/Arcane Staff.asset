@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9652df9db93046840834e84bc383443c, type: 3}
-  m_Name: WeaponSettings
+  m_Name: Arcane Staff
   m_EditorClassIdentifier: 
   <WeaponName>k__BackingField: Arcane Staff
   <ProjectilePrefab>k__BackingField: {fileID: 2352757070529799028, guid: 1b9e8e4ca4f49ea46b2bcce8e0d89185, type: 3}
@@ -48,5 +48,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  <ProjectileLifeTime>k__BackingField: 1.97
-  <Projectiles>k__BackingField: 1
+  <ProjectileLifeTime>k__BackingField: 1.5
+  <Projectiles>k__BackingField: 2

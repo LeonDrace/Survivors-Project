@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce72b28c7777c14e9c99fc8ac8969a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponsContainer: {fileID: 7448486208585952217}
+  m_WeaponsContainer: {fileID: 7448486208585952217}
 --- !u!114 &2739900765612236161
 MonoBehaviour:
   m_ObjectHideFlags: 0

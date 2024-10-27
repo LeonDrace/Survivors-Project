@@ -9,7 +9,9 @@ namespace Survivors.Weapons
 			switch (weaponSetting.ProjectileType)
 			{
 				case ProjectileType.Missile:
-					return new MissileProjectilePresenter(startPos, targetPos, weaponSetting);
+					var view = GameObject.Instantiate(weaponSetting.ProjectilePrefab).GetComponent<ProjectileView>();
+					var model = new ProjectileModel(startPos, targetPos, weaponSetting);
+					return new MissileProjectilePresenter(model, view);
 				default:
 					return null;
 			}

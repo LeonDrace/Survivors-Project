@@ -24,7 +24,6 @@ namespace Survivors.Player
 			m_Data.CurrentHealth = new ReactiveProperty<float>(settings.Health);
 			m_Data.CurrentHealthPercentage = new ReactiveProperty<float>(1);
 			m_Data.IsDead = new ReactiveProperty<bool>(false);
-			m_Data.EquippedWeapons.Add(m_Settings.GetDefaultWeaponSetting());
 
 			CurrentHealth.Where(x => x <= 0).Subscribe(_ => IsDead.Value = true).AddTo(disposables);
 			CurrentHealth.Subscribe(x => CurrentHealthPercentage.Value = x / settings.Health).AddTo(disposables);

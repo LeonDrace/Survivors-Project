@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -11,11 +12,13 @@ namespace Survivors.Weapons
 		protected readonly ProjectileFactory m_ProjectileFactory;
 
 		protected List<IProjectile> m_Projectiles = new List<IProjectile>();
-		private float _cooldown = 0;
-		private LayerMask _layerMask = 1 << 6;
+		private float m_Cooldown = 0;
+		private LayerMask m_LayerMask = 1 << 6;
 
 		public WeaponSetting WeaponSetting => m_WeaponSetting;
 		public ReactiveProperty<float> Cooldown = new ReactiveProperty<float>(0);
+
+		public Guid Guid { get; private set; } = System.Guid.NewGuid();
 
 		public WeaponBehavior(WeaponSetting weaponSetting, ProjectileFactory projectileFactory)
 		{
@@ -31,20 +34,18 @@ namespace Survivors.Weapons
 
 		private void CooldownUpdate(Transform playerTransform, float deltaTime)
 		{
-			_cooldown -= deltaTime;
-			Cooldown.Value = _cooldown / m_WeaponSetting.Cooldown;
+			m_Cooldown -= deltaTime;
+			Cooldown.Value = m_Cooldown / m_WeaponSetting.Cooldown;
 
-			if (_cooldown <= 0)
+			if (m_Cooldown > 0) return;
+
+			Collider2D[] enemies = GetEnemies(playerTransform);
+			if (enemies.Length == 0) return;
+
+			m_Cooldown = m_WeaponSetting.Cooldown;
+			for (int i = 0; i < m_WeaponSetting.Projectiles; i++)
 			{
-				Collider2D[] enemies = GetEnemies(playerTransform);
-				if (enemies.Length > 0)
-				{
-					_cooldown = m_WeaponSetting.Cooldown;
-					for (int i = 0; i < m_WeaponSetting.Projectiles; i++)
-					{
-						Spawn(playerTransform, enemies);
-					}
-				}
+				Spawn(playerTransform.position, enemies[UnityEngine.Random.Range(0, enemies.Length)].transform.position);
 			}
 		}
 
@@ -63,16 +64,15 @@ namespace Survivors.Weapons
 			}
 		}
 
-		public void Spawn(Transform playerTransform, Collider2D[] enemies)
+		public void Spawn(Vector3 spawnPos, Vector3 targetPos)
 		{
-			Collider2D selectedTarget = enemies[Random.Range(0, enemies.Length)];
-			var projectile = m_ProjectileFactory.Create(playerTransform.position, selectedTarget.transform.position, m_WeaponSetting);
+			var projectile = m_ProjectileFactory.Create(spawnPos, targetPos, m_WeaponSetting);
 			m_Projectiles.Add(projectile);
 		}
 
 		private Collider2D[] GetEnemies(Transform playerTransform)
 		{
-			return Physics2D.OverlapCircleAll(playerTransform.position, m_WeaponSetting.Range, _layerMask);
+			return Physics2D.OverlapCircleAll(playerTransform.position, m_WeaponSetting.Range, m_LayerMask);
 		}
 
 		public class Factory : PlaceholderFactory<WeaponSetting, WeaponBehavior> { }
