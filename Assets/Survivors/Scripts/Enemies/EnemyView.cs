@@ -15,42 +15,28 @@ namespace Survivors.Enemy
 		[SerializeField]
 		private NavMeshAgent m_Agent;
 
+		public SpriteRenderer DamageRenderer => m_DamageRenderer;
 		public NavMeshAgent Agent => m_Agent;
 		public event Action<float> onDamage;
 
-		private bool m_ShowsHitEffect = false;
-		private EnemySettings m_Settings;
-
-		public void Construct(Vector2 position, EnemySettings settings)
+		public void SetAgent(float speed, float stoppingDistance)
 		{
-			m_Settings = settings;
-			transform.position = new Vector3(position.x, position.y, 0);
-			m_SpriteRenderer.sprite = settings.Sprite;
-			m_DamageRenderer.sprite = settings.Sprite;
-			m_SpriteRenderer.color = settings.Color;
-			m_Agent.speed = settings.Speed;
-			m_Agent.stoppingDistance = settings.StoppingDistance;
+			m_Agent.speed = speed;
+			m_Agent.stoppingDistance = speed;
 			m_Agent.updateRotation = false;
 			m_Agent.updateUpAxis = false;
+		}
+
+		public void SetVisuals(Sprite sprite, Color color)
+		{
+			m_SpriteRenderer.sprite = sprite;
+			m_DamageRenderer.sprite = sprite;
+			m_SpriteRenderer.color = color;
 		}
 
 		public void DealDamage(float damage)
 		{
 			onDamage?.Invoke(damage);
-
-			if (m_DamageRenderer != null && !m_ShowsHitEffect)
-			{
-				m_DamageRenderer.enabled = true;
-				m_ShowsHitEffect = true;
-				Observable
-					.Timer(TimeSpan.FromSeconds(m_Settings.DamageFlickerDuration))
-					.Subscribe(_ =>
-					{
-						m_DamageRenderer.enabled = false;
-						m_ShowsHitEffect = false;
-					})
-					.AddTo(this);
-			}
 		}
 
 		public void DestroySelf()

@@ -11,7 +11,7 @@ namespace Survivors.Enemy
 
 		public SpawnSettings SpawnSettings { get; private set; }
 		public EnemySettings[] EnemySettings { get; private set; }
-		public EnemyPresenter.Factory EnemyFactory { get; private set; }
+		public EnemyFactory EnemyFactory { get; private set; }
 		public Transform PlayerTransform { get; private set; }
 		public Camera Camera { get; private set; }
 		public float RandomSpawnCooldown { get; set; }
@@ -23,7 +23,7 @@ namespace Survivors.Enemy
 			EnemySettings[] enemySettings,
 			EnemyData enemyData,
 			PlayerData playerData,
-			EnemyPresenter.Factory factory,
+			EnemyFactory factory,
 			PlayerView playerView)
 		{
 			m_EnemyData = enemyData;

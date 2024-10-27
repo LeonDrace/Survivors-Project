@@ -44,11 +44,6 @@ namespace Survivors.Player
 				.Subscribe(x => m_View.HealthSlider.value = x);
 		}
 
-		public void DealDamge(float damage)
-		{
-			m_Model.CurrentHealth.Value -= damage;
-		}
-
 		public Transform GetPlayerTransform()
 		{
 			return m_View.transform;

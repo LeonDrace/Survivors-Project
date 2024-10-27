@@ -1,4 +1,4 @@
-﻿using Survivors.Player;
+﻿using Survivors.Data;
 using UniRx;
 using UnityEngine;
 
@@ -11,22 +11,24 @@ namespace Survivors.Enemy
 		public float Range => m_Settings.Range;
 		public int Interval { get; set; }
 		public float Damage => m_Settings.Damage;
+		public float DamageFlickerDuration => m_Settings.DamageFlickerDuration;
+		public bool IsDamageFlickerActive { get; set; }
+		public float Speed => m_Settings.Speed;
+		public float StoppingDistance => m_Settings.StoppingDistance;
+		public Sprite Sprite => m_Settings.Sprite;
+		public Color Color => m_Settings.Color;
 		public ReactiveProperty<float> CurrentHealth { get; private set; } = new ReactiveProperty<float>();
 		public ReactiveProperty<bool> IsDead = new ReactiveProperty<bool>(false);
 
 		private EnemySettings m_Settings;
-		private readonly PlayerPresenter m_Player;
+		private readonly PlayerData m_Player;
 		private readonly CompositeDisposable m_Disposables;
 
-		public EnemyModel(PlayerView playerView, PlayerPresenter playerPresenter, CompositeDisposable disposables)
+		public EnemyModel(PlayerData playerData, EnemySettings settings, CompositeDisposable disposables)
 		{
-			Target = playerView.transform;
-			m_Player = playerPresenter;
+			Target = playerData.Transform;
+			m_Player = playerData;
 			m_Disposables = disposables;
-		}
-
-		public void SetSettings(EnemySettings settings)
-		{
 			m_Settings = settings;
 			CurrentHealth.Value = m_Settings.Health;
 			CurrentHealth.Where(x => x <= 0).Subscribe(_ => IsDead.Value = true).AddTo(m_Disposables);
@@ -44,7 +46,7 @@ namespace Survivors.Enemy
 
 		public void DealDamageToPlayer(float damage)
 		{
-			m_Player.DealDamge(damage);
+			m_Player.CurrentHealth.Value -= damage;
 		}
 	}
 }

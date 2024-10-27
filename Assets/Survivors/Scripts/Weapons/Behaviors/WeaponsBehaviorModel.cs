@@ -7,13 +7,13 @@ namespace Survivors.Weapons
 {
 	public class WeaponsBehaviorModel
 	{
-		private readonly WeaponBehavior.Factory m_Factory;
+		private readonly WeaponBehaviorFactory m_Factory;
 		private readonly PlayerData m_PlayerData;
 
-		public ReactiveCollection<WeaponBehavior> WeaponBehaviors => m_PlayerData.EquippedWeapons;
+		public ReactiveCollection<WeaponBehaviorPresenter> WeaponBehaviors => m_PlayerData.EquippedWeapons;
 		public Transform PlayerTransform => m_PlayerData.Transform;
 
-		public WeaponsBehaviorModel(CharacterSettings settings, PlayerData playerData, WeaponBehavior.Factory factory)
+		public WeaponsBehaviorModel(CharacterSettings settings, PlayerData playerData, WeaponBehaviorFactory factory)
 		{
 			m_Factory = factory;
 			m_PlayerData = playerData;

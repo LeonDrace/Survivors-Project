@@ -64,7 +64,7 @@ namespace Survivors.Enemy
 			{
 				if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1, NavMesh.AllAreas))
 				{
-					var enemy = m_Model.EnemyFactory.Create(position, m_Model.EnemySettings[Random.Range(0, m_Model.EnemySettings.Length)]);
+					var enemy = m_Model.EnemyFactory.Create(m_Model.EnemySettings[Random.Range(0, m_Model.EnemySettings.Length)], position);
 					m_Model.Enemies.Add(enemy);
 				}
 			}

@@ -32,13 +32,11 @@ namespace Survivors.Weapons
 				.AddTo(disposables);
 		}
 
-		private WeaponView AddWeaponView(WeaponBehavior behavior)
+		private WeaponView AddWeaponView(WeaponBehaviorPresenter behavior)
 		{
-			var weaponView = GameObject.Instantiate(behavior.WeaponSetting.WeaponUiPrefab, m_View.Container).GetComponent<WeaponView>();
-			weaponView.Initialize(behavior.Guid,
-				behavior.WeaponSetting.ProjectileSprite, behavior.WeaponSetting.ProjectileColor, behavior.WeaponSetting.WeaponName);
+			var weaponView = m_Model.CreateWeaponView(behavior, m_View.Container);
 
-			behavior.Cooldown
+			behavior.Model.CooldownPercentage
 				.Subscribe(x => weaponView.UpdateSlider(x))
 				.AddTo(weaponView);
 			m_View.AddWeapon(weaponView);

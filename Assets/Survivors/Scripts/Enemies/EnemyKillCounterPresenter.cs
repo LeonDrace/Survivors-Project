@@ -8,9 +8,9 @@ namespace Survivors.Enemy
 		private readonly EnemyKillCounterView m_View;
 		private readonly EnemyData m_Model;
 
-		public EnemyKillCounterPresenter(EnemyData data, EnemyKillCounterView view, CompositeDisposable disposables)
+		public EnemyKillCounterPresenter(EnemyData model, EnemyKillCounterView view, CompositeDisposable disposables)
 		{
-			m_Model = data;
+			m_Model = model;
 			m_View = view;
 
 			//Update killed enemies.

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace Survivors.Enemy
@@ -8,18 +10,32 @@ namespace Survivors.Enemy
 		private readonly EnemyModel m_Model;
 		private readonly EnemyView m_View;
 
-		public EnemyPresenter(Vector2 position, EnemySettings settings, EnemyModel model)
+		public EnemyPresenter(EnemyView view, EnemyModel model)
 		{
 			m_Model = model;
-			m_Model.SetSettings(settings);
-			m_View = GameObject.Instantiate(settings.Prefab, position, Quaternion.identity).GetComponent<EnemyView>();
-			m_View.Construct(position, settings);
+			m_View = view;
+			m_View.SetAgent(m_Model.Speed, m_Model.StoppingDistance);
+			m_View.SetVisuals(m_Model.Sprite, m_Model.Color);
 			m_View.onDamage += OnDamage;
 		}
 
 		private void OnDamage(float value)
 		{
 			m_Model.CurrentHealth.Value -= value;
+
+			if (m_View.DamageRenderer != null && !m_Model.IsDamageFlickerActive)
+			{
+				m_View.DamageRenderer.enabled = true;
+				m_Model.IsDamageFlickerActive = true;
+				Observable
+					.Timer(TimeSpan.FromSeconds(m_Model.DamageFlickerDuration))
+					.Subscribe(_ =>
+					{
+						m_View.DamageRenderer.enabled = false;
+						m_Model.IsDamageFlickerActive = false;
+					})
+					.AddTo(m_View);
+			}
 		}
 
 		public void OnTick()
@@ -52,11 +68,6 @@ namespace Survivors.Enemy
 		public void Destroy()
 		{
 			m_View.DestroySelf();
-		}
-
-		public class Factory : PlaceholderFactory<Vector2, EnemySettings, EnemyPresenter>
-		{
-
 		}
 	}
 }

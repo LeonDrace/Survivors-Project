@@ -1,5 +1,4 @@
 using Survivors.Extensions;
-using Survivors.Player;
 using UniRx;
 using Zenject;
 
@@ -14,6 +13,7 @@ namespace Survivors.Installer
 			Container.BindInstance(m_Disposer);
 			Container.InstallGameState();
 			Container.InstallPlayer();
+			Container.InstallWeapons();
 			Container.InstallEnemy();
 			Container.InstallRestart();
 		}
