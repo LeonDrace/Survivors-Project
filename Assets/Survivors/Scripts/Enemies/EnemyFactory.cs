@@ -19,7 +19,7 @@ namespace Survivors.Enemy
 		{
 			var view = GameObject.Instantiate(settings.Prefab, position, Quaternion.identity).GetComponent<EnemyView>();
 			var model = new EnemyModel(m_PlayerData, settings, m_Disposables);
-			return new EnemyPresenter(view, model);
+			return new EnemyPresenter(view, model, m_Disposables);
 		}
 	}
 }

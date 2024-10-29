@@ -17,12 +17,12 @@ namespace Survivors.Enemy
 
 		public SpriteRenderer DamageRenderer => m_DamageRenderer;
 		public NavMeshAgent Agent => m_Agent;
-		public event Action<float> onDamage;
+		public event Action<float> OnDamage;
 
 		public void SetAgent(float speed, float stoppingDistance)
 		{
 			m_Agent.speed = speed;
-			m_Agent.stoppingDistance = speed;
+			m_Agent.stoppingDistance = stoppingDistance;
 			m_Agent.updateRotation = false;
 			m_Agent.updateUpAxis = false;
 		}
@@ -36,12 +36,17 @@ namespace Survivors.Enemy
 
 		public void DealDamage(float damage)
 		{
-			onDamage?.Invoke(damage);
+			OnDamage?.Invoke(damage);
 		}
 
 		public void DestroySelf()
 		{
 			GameObject.Destroy(gameObject);
+		}
+
+		public void SetDamageIndicator(bool state)
+		{
+			m_DamageRenderer.enabled = state;
 		}
 	}
 }

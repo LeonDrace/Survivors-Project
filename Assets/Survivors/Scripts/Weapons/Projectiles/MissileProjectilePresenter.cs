@@ -1,4 +1,5 @@
 using Survivors.Enemy;
+using UniRx;
 using UnityEngine;
 
 namespace Survivors.Weapons
@@ -29,7 +30,10 @@ namespace Survivors.Weapons
 			spriteRenderer.sprite = m_Model.Sprite;
 			spriteRenderer.transform.localScale = m_Model.Size;
 
-			m_View.OnCollision += OnHit;
+			Observable
+				.FromEvent<Collider2D>(h => m_View.OnCollision += OnHit, h => m_View.OnCollision -= OnHit)
+				.Subscribe()
+				.AddTo(m_View);
 		}
 
 		public void OnTick()

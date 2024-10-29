@@ -17,7 +17,7 @@ MonoBehaviour:
   <Color>k__BackingField: {r: 1, g: 0.9647059, b: 0, a: 1}
   <Sprite>k__BackingField: {fileID: -2413806693520163455, guid: 4c8f420b2e70e0b4693bee167e7be7c3, type: 3}
   <Health>k__BackingField: 2
-  <StoppingDistance>k__BackingField: 1
+  <StoppingDistance>k__BackingField: 0
   <Range>k__BackingField: 1.5
   <Damage>k__BackingField: 1
   <DamageCooldown>k__BackingField: 1

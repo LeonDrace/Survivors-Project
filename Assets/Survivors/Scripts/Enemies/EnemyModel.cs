@@ -11,6 +11,7 @@ namespace Survivors.Enemy
 		public float Range => m_Settings.Range;
 		public int Interval { get; set; }
 		public float Damage => m_Settings.Damage;
+		public float DamageFlickerCountdown { get; set; }
 		public float DamageFlickerDuration => m_Settings.DamageFlickerDuration;
 		public bool IsDamageFlickerActive { get; set; }
 		public float Speed => m_Settings.Speed;
@@ -31,7 +32,6 @@ namespace Survivors.Enemy
 			m_Disposables = disposables;
 			m_Settings = settings;
 			CurrentHealth.Value = m_Settings.Health;
-			CurrentHealth.Where(x => x <= 0).Subscribe(_ => IsDead.Value = true).AddTo(m_Disposables);
 		}
 
 		public void ResetCooldown()

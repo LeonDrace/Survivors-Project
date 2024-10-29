@@ -16,6 +16,15 @@ namespace Survivors.Player
 			m_Model = playerModel;
 			m_View = playerView;
 
+			m_Model.CurrentHealth
+				.Where(x => x <= 0)
+				.Subscribe(_ => m_Model.IsDead.Value = true)
+				.AddTo(disposables);
+
+			m_Model.CurrentHealth
+				.Subscribe(x => m_Model.CurrentHealthPercentage.Value = x / m_Model.BaseHealth)
+				.AddTo(disposables);
+
 			//Move
 			joystick.OnInput
 				.TakeWhile(_ => !m_Model.IsDead.Value)

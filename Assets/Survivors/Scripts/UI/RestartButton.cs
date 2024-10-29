@@ -19,6 +19,6 @@ public class RestartButton : MonoBehaviour
 			{
 				SceneManager.LoadScene(m_SceneName);
 				m_Button.interactable = false;
-			});
+			}).AddTo(this);
 	}
 }
