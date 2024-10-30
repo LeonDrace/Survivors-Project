@@ -7,8 +7,7 @@ namespace Survivors.Data
 {
 	public class PlayerData
 	{
-		private readonly Transform m_Transform;
-		public Transform Transform => m_Transform;
+		public Transform Transform { get; }
 		public ReactiveProperty<float> CurrentHealth { get; set; }
 		public ReactiveProperty<float> CurrentHealthPercentage { get; set; }
 		public ReactiveProperty<bool> IsDead { get; set; }
@@ -16,7 +15,7 @@ namespace Survivors.Data
 
 		public PlayerData(PlayerView playerView)
 		{
-			m_Transform = playerView.transform;
+			Transform = playerView.transform;
 		}
 	}
 }

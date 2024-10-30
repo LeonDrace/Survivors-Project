@@ -13,7 +13,6 @@ namespace Survivors.Enemy
 		public EnemySettings[] EnemySettings { get; private set; }
 		public EnemyFactory EnemyFactory { get; private set; }
 		public Transform PlayerTransform { get; private set; }
-		public Camera Camera { get; private set; }
 		public float RandomSpawnCooldown { get; set; }
 		public ReactiveProperty<int> KilledEnemies => m_EnemyData.KilledEnemies;
 		public ReactiveCollection<IEnemy> Enemies => m_EnemyData.Enemies;
@@ -23,8 +22,7 @@ namespace Survivors.Enemy
 			EnemySettings[] enemySettings,
 			EnemyData enemyData,
 			PlayerData playerData,
-			EnemyFactory factory,
-			PlayerView playerView)
+			EnemyFactory factory)
 		{
 			m_EnemyData = enemyData;
 			m_EnemyData.KilledEnemies = new ReactiveProperty<int>(0);
@@ -32,7 +30,6 @@ namespace Survivors.Enemy
 			EnemySettings = enemySettings;
 			EnemyFactory = factory;
 			PlayerTransform = playerData.Transform;
-			Camera = Camera.main;
 		}
 	}
 }

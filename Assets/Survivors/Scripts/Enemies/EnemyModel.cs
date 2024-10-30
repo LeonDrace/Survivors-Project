@@ -21,7 +21,7 @@ namespace Survivors.Enemy
 		public ReactiveProperty<float> CurrentHealth { get; private set; } = new ReactiveProperty<float>();
 		public ReactiveProperty<bool> IsDead = new ReactiveProperty<bool>(false);
 
-		private EnemySettings m_Settings;
+		private readonly EnemySettings m_Settings;
 		private readonly PlayerData m_Player;
 		private readonly CompositeDisposable m_Disposables;
 
@@ -41,7 +41,7 @@ namespace Survivors.Enemy
 
 		public void ResetInterval()
 		{
-			Interval = m_Settings.PathfindingInverval;
+			Interval = m_Settings.PathfindingInterval;
 		}
 
 		public void DealDamageToPlayer(float damage)

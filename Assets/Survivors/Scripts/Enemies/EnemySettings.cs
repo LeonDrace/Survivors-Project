@@ -28,6 +28,6 @@ namespace Survivors.Enemy
 		[field: SerializeField]
 		public float DamageFlickerDuration { get; private set; } = 0.16f;
 		[field: SerializeField]
-		public int PathfindingInverval { get; private set; } = 20;
+		public int PathfindingInterval { get; private set; } = 20;
 	}
 }
