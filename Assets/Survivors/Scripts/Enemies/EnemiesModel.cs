@@ -5,28 +5,24 @@ using UnityEngine;
 
 namespace Survivors.Enemy
 {
-	public class EnemiesModel
+	public class EnemiesModel : IEnemyData
 	{
-		private readonly EnemyData m_EnemyData;
-
 		public SpawnSettings SpawnSettings { get; private set; }
 		public EnemySettings[] EnemySettings { get; private set; }
 		public EnemyFactory EnemyFactory { get; private set; }
 		public Transform PlayerTransform { get; private set; }
 		public float RandomSpawnCooldown { get; set; }
-		public ReactiveProperty<int> KilledEnemies => m_EnemyData.KilledEnemies;
-		public ReactiveCollection<IEnemy> Enemies => m_EnemyData.Enemies;
+		public ReactiveProperty<int> KilledEnemies { get; set; }
+		public ReactiveCollection<IEnemy> Enemies { get; set; } = new();
 		public Camera Camera { get; private set; }
 
 		public EnemiesModel(
 			SpawnSettings spawnSettings,
 			EnemySettings[] enemySettings,
-			EnemyData enemyData,
 			PlayerData playerData,
 			EnemyFactory factory)
 		{
-			m_EnemyData = enemyData;
-			m_EnemyData.KilledEnemies = new ReactiveProperty<int>(0);
+			KilledEnemies = new ReactiveProperty<int>(0);
 			SpawnSettings = spawnSettings;
 			EnemySettings = enemySettings;
 			EnemyFactory = factory;

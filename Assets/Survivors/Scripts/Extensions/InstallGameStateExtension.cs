@@ -1,4 +1,5 @@
 ﻿using Survivors.Data;
+using Survivors.Enemy;
 using Zenject;
 
 namespace Survivors.Extensions
@@ -7,7 +8,6 @@ namespace Survivors.Extensions
 	{
 		public static DiContainer InstallGameState(this DiContainer container)
 		{
-			container.Bind<EnemyData>().AsSingle();
 			container.Bind<PlayerData>().AsSingle();
 			container.Bind<GameState>().AsSingle().NonLazy();
 

@@ -5,7 +5,7 @@ namespace Survivors.Enemy
 {
 	public class EnemyKillCounterPresenter
 	{
-		public EnemyKillCounterPresenter(EnemyData model, EnemyKillCounterView view, CompositeDisposable disposables)
+		public EnemyKillCounterPresenter(IEnemyData model, EnemyKillCounterView view, CompositeDisposable disposables)
 		{
 			model.Enemies
 				.ObserveRemove()

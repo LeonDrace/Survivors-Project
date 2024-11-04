@@ -7,7 +7,7 @@ namespace Survivors.Extensions
 	{
 		public static DiContainer InstallEnemy(this DiContainer container)
 		{
-			container.Bind<EnemiesModel>().AsSingle();
+			container.Bind(typeof(EnemiesModel), typeof(IEnemyData)).To<EnemiesModel>().AsSingle();
 			container.BindInterfacesAndSelfTo<EnemiesPresenter>().AsSingle();
 			container.Bind<EnemyModel>().AsTransient();
 			container.Bind<EnemyFactory>().AsSingle().NonLazy();
