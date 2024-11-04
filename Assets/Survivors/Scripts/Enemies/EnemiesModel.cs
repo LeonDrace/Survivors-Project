@@ -16,6 +16,7 @@ namespace Survivors.Enemy
 		public float RandomSpawnCooldown { get; set; }
 		public ReactiveProperty<int> KilledEnemies => m_EnemyData.KilledEnemies;
 		public ReactiveCollection<IEnemy> Enemies => m_EnemyData.Enemies;
+		public Camera Camera { get; private set; }
 
 		public EnemiesModel(
 			SpawnSettings spawnSettings,
@@ -30,6 +31,7 @@ namespace Survivors.Enemy
 			EnemySettings = enemySettings;
 			EnemyFactory = factory;
 			PlayerTransform = playerData.Transform;
+			Camera = Camera.main;
 		}
 	}
 }

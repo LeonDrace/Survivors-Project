@@ -57,9 +57,7 @@ namespace Survivors.Enemy
 			}
 
 			int amount = m_Model.SpawnSettings.GetSpawnAmount();
-			float radius = m_Model.SpawnSettings.Radius;
-			Vector2 playerPosition = m_Model.PlayerTransform.position;
-			Vector2 position = Vector2.one * Random.onUnitSphere * radius + playerPosition;
+			Vector2 position = GetRandomScreenBorderPointAsWorldPosition(m_Model.Camera,100,100);
 			for (int i = 0; i < amount; i++)
 			{
 				if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1, NavMesh.AllAreas))
@@ -70,11 +68,25 @@ namespace Survivors.Enemy
 			}
 		}
 
-		public static Rect GetScreenWorldRect(Camera value)
+		private Vector2 GetRandomPointOnRadius(Vector2 position, float radius)
 		{
-			Vector3 bottomLeft = value.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
-			Vector3 topRight = value.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
-			return (new Rect(bottomLeft.x, bottomLeft.y, topRight.x * 2f, topRight.y * 2f));
+			return Vector2.one * radius * Random.onUnitSphere + position;
+		}
+		
+		private Vector3 GetRandomScreenBorderPointAsWorldPosition(Camera camera, float widthOffset = 0, float heightOffset = 0)
+		{
+			int width = Screen.width;
+			int height = Screen.height;
+			int randomBorder = UnityEngine.Random.Range(0, 4);
+
+			return randomBorder switch
+			{
+				0 => camera.ScreenToWorldPoint(new Vector3(Random.Range(-widthOffset, width + widthOffset), -heightOffset, 0)),
+				1 => camera.ScreenToWorldPoint(new Vector3(Random.Range(-widthOffset, width + widthOffset), height + heightOffset, 0)),
+				2 => camera.ScreenToWorldPoint(new Vector3(-widthOffset, Random.Range(-heightOffset, height + heightOffset), 0)),
+				3 => camera.ScreenToWorldPoint(new Vector3(width + heightOffset, Random.Range(heightOffset, height + heightOffset), 0)),
+				_ => Vector3.zero
+			};
 		}
 	}
 }
