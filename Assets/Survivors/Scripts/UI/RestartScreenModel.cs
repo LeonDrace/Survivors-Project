@@ -1,19 +1,17 @@
-﻿
-
-using Survivors.Data;
+﻿using Survivors.Player;
 using UniRx;
 
 namespace Survivors.UI
 {
 	public class RestartScreenModel
 	{
-		private readonly PlayerData m_PlayerData;
+		private readonly IPlayerHealthData m_PlayerHealthData;
 
-		public ReactiveProperty<bool> IsDead => m_PlayerData.IsDead;
+		public ReactiveProperty<bool> IsDead => m_PlayerHealthData.IsDead;
 
-		public RestartScreenModel(PlayerData playerData)
+		public RestartScreenModel(IPlayerHealthData playerHealthData)
 		{
-			m_PlayerData = playerData;
+			m_PlayerHealthData = playerHealthData;
 		}
 	}
 }

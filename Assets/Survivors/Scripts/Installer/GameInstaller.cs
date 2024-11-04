@@ -11,7 +11,6 @@ namespace Survivors.Installer
 		public override void InstallBindings()
 		{
 			Container.BindInstance(m_Disposer);
-			Container.InstallGameState();
 			Container.InstallPlayer();
 			Container.InstallWeapons();
 			Container.InstallEnemy();

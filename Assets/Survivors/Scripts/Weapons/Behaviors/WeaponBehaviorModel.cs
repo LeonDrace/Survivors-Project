@@ -7,8 +7,8 @@ namespace Survivors.Weapons
 {
 	public class WeaponBehaviorModel
 	{
-		protected readonly WeaponSetting m_WeaponSetting;
-		protected readonly ProjectileFactory m_ProjectileFactory;
+		private readonly WeaponSetting m_WeaponSetting;
+		private readonly ProjectileFactory m_ProjectileFactory;
 
 		public Guid Guid { get; private set; } = System.Guid.NewGuid();
 		public LayerMask LayerMask { get; private set; } = 1 << 6;

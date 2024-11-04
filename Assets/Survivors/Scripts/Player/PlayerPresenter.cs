@@ -5,10 +5,12 @@ using UnityEngine;
 
 namespace Survivors.Player
 {
-	public class PlayerPresenter
+	public class PlayerPresenter : IPlayerTransformData
 	{
 		private readonly PlayerView m_View;
 		private readonly PlayerModel m_Model;
+
+		public Transform Transform => m_View.transform;
 
 		public PlayerPresenter(Joystick joystick,
 			PlayerView playerView, PlayerModel playerModel, CompositeDisposable disposables)
@@ -51,11 +53,6 @@ namespace Survivors.Player
 			//Current health
 			m_Model.CurrentHealthPercentage
 				.Subscribe(x => m_View.HealthSlider.value = x);
-		}
-
-		public Transform GetPlayerTransform()
-		{
-			return m_View.transform;
 		}
 	}
 }

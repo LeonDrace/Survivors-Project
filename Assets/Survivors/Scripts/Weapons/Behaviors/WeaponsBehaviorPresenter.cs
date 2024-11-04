@@ -16,7 +16,7 @@ namespace Survivors.Weapons
 
 		public void Tick()
 		{
-			foreach (var behavior in m_Model.WeaponBehaviors)
+			foreach (var behavior in m_Model.EquippedWeapons)
 			{
 				behavior.OnTick(m_Model.PlayerTransform, UnityEngine.Time.deltaTime);
 			}

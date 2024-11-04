@@ -1,18 +1,17 @@
-﻿using Survivors.Data;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
 
 namespace Survivors.Weapons
 {
 	public class WeaponsDisplayModel
 	{
-		private readonly PlayerData m_PlayerData;
+		private readonly IPlayerWeaponsData m_WeaponData;
 		private readonly WeaponViewFactory m_WeaponViewFactory;
-		public ReactiveCollection<WeaponBehaviorPresenter> WeaponBehaviors => m_PlayerData.EquippedWeapons;
+		public ReactiveCollection<WeaponBehaviorPresenter> WeaponBehaviors => m_WeaponData.EquippedWeapons;
 
-		public WeaponsDisplayModel(PlayerData playerData, WeaponViewFactory weaponViewFactory, CompositeDisposable disposables)
+		public WeaponsDisplayModel(IPlayerWeaponsData weaponData, WeaponViewFactory weaponViewFactory, CompositeDisposable disposables)
 		{
-			m_PlayerData = playerData;
+			m_WeaponData = weaponData;
 			m_WeaponViewFactory = weaponViewFactory;
 		}
 

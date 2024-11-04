@@ -1,4 +1,4 @@
-﻿using Survivors.Data;
+﻿using Survivors.Player;
 using UniRx;
 using UnityEngine;
 
@@ -22,13 +22,16 @@ namespace Survivors.Enemy
 		public ReactiveProperty<bool> IsDead = new ReactiveProperty<bool>(false);
 
 		private readonly EnemySettings m_Settings;
-		private readonly PlayerData m_Player;
+		private readonly IPlayerHealthData m_PlayerHealth;
 		private readonly CompositeDisposable m_Disposables;
 
-		public EnemyModel(PlayerData playerData, EnemySettings settings, CompositeDisposable disposables)
+		public EnemyModel(IPlayerTransformData playerTransformData, 
+			IPlayerHealthData playerHealthData, 
+			EnemySettings settings, 
+			CompositeDisposable disposables)
 		{
-			Target = playerData.Transform;
-			m_Player = playerData;
+			Target = playerTransformData.Transform;
+			m_PlayerHealth = playerHealthData;
 			m_Disposables = disposables;
 			m_Settings = settings;
 			CurrentHealth.Value = m_Settings.Health;
@@ -46,7 +49,7 @@ namespace Survivors.Enemy
 
 		public void DealDamageToPlayer(float damage)
 		{
-			m_Player.CurrentHealth.Value -= damage;
+			m_PlayerHealth.CurrentHealth.Value -= damage;
 		}
 	}
 }

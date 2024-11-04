@@ -1,5 +1,4 @@
-﻿using Survivors.Data;
-using UniRx;
+﻿using UniRx;
 
 namespace Survivors.Enemy
 {

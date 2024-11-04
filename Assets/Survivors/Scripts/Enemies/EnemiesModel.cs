@@ -1,5 +1,4 @@
-﻿using Survivors.Data;
-using Survivors.Player;
+﻿using Survivors.Player;
 using UniRx;
 using UnityEngine;
 
@@ -19,14 +18,14 @@ namespace Survivors.Enemy
 		public EnemiesModel(
 			SpawnSettings spawnSettings,
 			EnemySettings[] enemySettings,
-			PlayerData playerData,
+			IPlayerTransformData playerTransformData,
 			EnemyFactory factory)
 		{
 			KilledEnemies = new ReactiveProperty<int>(0);
 			SpawnSettings = spawnSettings;
 			EnemySettings = enemySettings;
 			EnemyFactory = factory;
-			PlayerTransform = playerData.Transform;
+			PlayerTransform = playerTransformData.Transform;
 			Camera = Camera.main;
 		}
 	}

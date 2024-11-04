@@ -1,23 +1,23 @@
-﻿using Survivors.Data;
-using Survivors.Player;
+﻿using Survivors.Player;
 using UniRx;
 using UnityEngine;
 
 namespace Survivors.Weapons
 {
-	public class WeaponsBehaviorModel
+	public class WeaponsBehaviorModel : IPlayerWeaponsData
 	{
 		private readonly WeaponBehaviorFactory m_Factory;
-		private readonly PlayerData m_PlayerData;
 
-		public ReactiveCollection<WeaponBehaviorPresenter> WeaponBehaviors => m_PlayerData.EquippedWeapons;
-		public Transform PlayerTransform => m_PlayerData.Transform;
+		public ReactiveCollection<WeaponBehaviorPresenter> EquippedWeapons { get; set; } = new();
+		public Transform PlayerTransform { get; private set; }
 
-		public WeaponsBehaviorModel(CharacterSettings settings, PlayerData playerData, WeaponBehaviorFactory factory)
+		public WeaponsBehaviorModel(CharacterSettings settings, 
+			IPlayerTransformData playerTransformData, 
+			WeaponBehaviorFactory factory)
 		{
 			m_Factory = factory;
-			m_PlayerData = playerData;
-			WeaponBehaviors.Add(m_Factory.Create(settings.GetDefaultWeaponSetting()));
+			PlayerTransform = playerTransformData.Transform;
+			EquippedWeapons.Add(m_Factory.Create(settings.GetDefaultWeaponSetting()));
 		}
 	}
 }

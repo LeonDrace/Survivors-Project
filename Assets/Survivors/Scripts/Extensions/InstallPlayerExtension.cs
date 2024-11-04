@@ -7,8 +7,8 @@ namespace Survivors.Extensions
 	{
 		public static DiContainer InstallPlayer(this DiContainer container)
 		{
-			container.Bind<PlayerModel>().AsSingle().NonLazy();
-			container.Bind<PlayerPresenter>().AsSingle().NonLazy();
+			container.Bind(typeof(PlayerModel), typeof(IPlayerHealthData)).To<PlayerModel>().AsSingle().NonLazy();
+			container.Bind(typeof(PlayerPresenter), typeof(IPlayerTransformData)).To<PlayerPresenter>().AsSingle().NonLazy();
 
 			return container;
 		}

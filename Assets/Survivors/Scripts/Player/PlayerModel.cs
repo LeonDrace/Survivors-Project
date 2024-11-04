@@ -1,30 +1,25 @@
-using Survivors.Data;
-using Survivors.Weapons;
-using System.Linq;
 using UniRx;
+using UnityEngine;
 
 namespace Survivors.Player
 {
-	public class PlayerModel
+	public class PlayerModel : IPlayerHealthData
 	{
 		private readonly CharacterSettings m_Settings;
-		private readonly PlayerData m_Data;
-
 		public float BaseHealth => m_Settings.Health;
-		public ReactiveProperty<float> CurrentHealth => m_Data.CurrentHealth;
-		public ReactiveProperty<float> CurrentHealthPercentage => m_Data.CurrentHealthPercentage;
-		public ReactiveProperty<bool> IsDead => m_Data.IsDead;
+		public ReactiveProperty<float> CurrentHealth{ get; set; }
+		public ReactiveProperty<float> CurrentHealthPercentage{ get; set; }
+		public ReactiveProperty<bool> IsDead { get; set; }
 		public float DamageFlickerDuration { get; set; }
 
-		public PlayerModel(CharacterSettings settings, PlayerData playerData, CompositeDisposable disposables)
+		public PlayerModel(CharacterSettings settings, CompositeDisposable disposables)
 		{
 			m_Settings = settings;
-			m_Data = playerData;
 
 			DamageFlickerDuration = settings.DamageFlickerDuration;
-			m_Data.CurrentHealth = new ReactiveProperty<float>(settings.Health);
-			m_Data.CurrentHealthPercentage = new ReactiveProperty<float>(1);
-			m_Data.IsDead = new ReactiveProperty<bool>(false);
+			CurrentHealth = new ReactiveProperty<float>(settings.Health);
+			CurrentHealthPercentage = new ReactiveProperty<float>(1);
+			IsDead = new ReactiveProperty<bool>(false);
 		}
 	}
 }

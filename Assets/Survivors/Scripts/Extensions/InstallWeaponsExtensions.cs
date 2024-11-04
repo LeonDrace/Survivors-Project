@@ -1,8 +1,4 @@
-﻿using Survivors.Player;
-using Survivors.Weapons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Survivors.Weapons;
 using Zenject;
 
 namespace Survivors.Extensions
@@ -11,8 +7,10 @@ namespace Survivors.Extensions
 	{
 		public static DiContainer InstallWeapons(this DiContainer container)
 		{
-			container.Bind<WeaponsBehaviorModel>().AsSingle().NonLazy();
+			container.Bind(typeof(WeaponsBehaviorModel), typeof(IPlayerWeaponsData))
+				.To<WeaponsBehaviorModel>().AsSingle().NonLazy();
 			container.BindInterfacesAndSelfTo<WeaponsBehaviorPresenter>().AsSingle();
+			
 			container.Bind<WeaponBehaviorModel>().AsTransient();
 
 			container.Bind<ProjectileFactory>().AsSingle().NonLazy();
