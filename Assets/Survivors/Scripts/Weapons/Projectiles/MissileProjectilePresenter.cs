@@ -1,82 +1,80 @@
-using Survivors.Enemy;
+using Survivors.Scripts.Enemies.Enemy;
 using UniRx;
 using UnityEngine;
 
 namespace Survivors.Weapons
 {
-	public class MissileProjectilePresenter : IProjectile
-	{
-		private readonly ProjectileModel m_Model;
-		private readonly ProjectileView m_View;
+    public class MissileProjectilePresenter : IProjectile
+    {
+        private readonly ProjectileModel m_Model;
+        private readonly ProjectileView m_View;
 
-		public MissileProjectilePresenter(ProjectileModel model, ProjectileView view)
-		{
-			m_Model = model;
-			m_View = view;
-			OnSpawnProjectile();
-		}
+        public MissileProjectilePresenter(ProjectileModel model, ProjectileView view)
+        {
+            m_Model = model;
+            m_View = view;
+            OnSpawnProjectile();
+        }
 
-		private void OnSpawnProjectile()
-		{
-			Vector3 randomPos = Random.insideUnitSphere * m_Model.SpawnRadius;
-			m_View.transform.position = new Vector3(
-				randomPos.x + m_Model.StartPosition.x,
-				randomPos.y + m_Model.StartPosition.y,
-				0);
-			m_Model.Dir = (m_Model.TargetPosition - m_Model.StartPosition).normalized;
+        public void OnTick()
+        {
+            MoveProjectile();
+            Cooldown();
+        }
 
-			SpriteRenderer spriteRenderer = m_View.SpriteRenderer;
-			spriteRenderer.color = m_Model.Color;
-			spriteRenderer.sprite = m_Model.Sprite;
-			spriteRenderer.transform.localScale = m_Model.Size;
+        public void OnHit(Collider2D collision)
+        {
+            collision.gameObject.GetComponent<EnemyView>().DealDamage(m_Model.Damage);
+            Destroy();
+        }
 
-			Observable
-				.FromEvent<Collider2D>(h => m_View.OnCollision += OnHit, h => m_View.OnCollision -= OnHit)
-				.Subscribe()
-				.AddTo(m_View);
-		}
+        public bool IsDead()
+        {
+            return m_Model.IsDead;
+        }
 
-		public void OnTick()
-		{
-			MoveProjectile();
-			Cooldown();
-		}
+        public void Destroy()
+        {
+            Object.Destroy(m_View.gameObject);
+            m_Model.IsDead = true;
+        }
 
-		private void MoveProjectile()
-		{
-			if (m_Model.IsDead) return;
+        private void OnSpawnProjectile()
+        {
+            var randomPos = Random.insideUnitSphere * m_Model.SpawnRadius;
+            m_View.transform.position = new Vector3(
+                randomPos.x + m_Model.StartPosition.x,
+                randomPos.y + m_Model.StartPosition.y,
+                0);
+            m_Model.Dir = (m_Model.TargetPosition - m_Model.StartPosition).normalized;
 
-			Vector3 speed = m_Model.Dir * m_Model.Speed
-				* Time.deltaTime * m_Model.AnimationCurve.Evaluate(m_Model.CurrentLifeTime / m_Model.LifeTime);
-			m_View.transform.position = m_View.transform.position + speed;
-		}
+            var spriteRenderer = m_View.SpriteRenderer;
+            spriteRenderer.color = m_Model.Color;
+            spriteRenderer.sprite = m_Model.Sprite;
+            spriteRenderer.transform.localScale = m_Model.Size;
 
-		private void Cooldown()
-		{
-			if (m_Model.IsDead) return;
+            Observable
+                .FromEvent<Collider2D>(h => m_View.OnCollision += OnHit, h => m_View.OnCollision -= OnHit)
+                .Subscribe()
+                .AddTo(m_View);
+        }
 
-			m_Model.CurrentLifeTime += Time.deltaTime;
-			if (m_Model.CurrentLifeTime >= m_Model.LifeTime)
-			{
-				Destroy();
-			}
-		}
+        private void MoveProjectile()
+        {
+            if (m_Model.IsDead) return;
 
-		public void OnHit(Collider2D collision)
-		{
-			collision.gameObject.GetComponent<EnemyView>().DealDamage(m_Model.Damage);
-			Destroy();
-		}
+            var speed = m_Model.Dir * m_Model.Speed
+                                    * Time.deltaTime *
+                                    m_Model.AnimationCurve.Evaluate(m_Model.CurrentLifeTime / m_Model.LifeTime);
+            m_View.transform.position = m_View.transform.position + speed;
+        }
 
-		public bool IsDead()
-		{
-			return m_Model.IsDead;
-		}
+        private void Cooldown()
+        {
+            if (m_Model.IsDead) return;
 
-		public void Destroy()
-		{
-			GameObject.Destroy(m_View.gameObject);
-			m_Model.IsDead = true;
-		}
-	}
+            m_Model.CurrentLifeTime += Time.deltaTime;
+            if (m_Model.CurrentLifeTime >= m_Model.LifeTime) Destroy();
+        }
+    }
 }

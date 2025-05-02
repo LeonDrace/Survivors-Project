@@ -1,18 +1,18 @@
+using Survivors.Scripts.Contracts;
 using UniRx;
 
 namespace Survivors.Enemy
 {
     public class EnemyKillCounterModel
     {
-        private readonly IEnemyData m_Data;
-        
-        public ReactiveCollection<IEnemy> Enemies => m_Data.Enemies;
-        public ReactiveProperty<int> KilledEnemies => m_Data.KilledEnemies;
-        
-        
-        public EnemyKillCounterModel(IEnemyData data)
+        private readonly IEnemies m_Data;
+
+
+        public EnemyKillCounterModel(IEnemies data)
         {
             m_Data = data;
         }
+
+        public ReactiveProperty<int> KilledEnemies => m_Data.KilledEnemies;
     }
 }

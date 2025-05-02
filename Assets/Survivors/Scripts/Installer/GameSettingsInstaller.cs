@@ -1,5 +1,6 @@
 ﻿using Survivors.Enemy;
 using Survivors.Player;
+using Survivors.Scripts.Enemies.Enemy;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
