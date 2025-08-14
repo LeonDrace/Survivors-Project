@@ -1,7 +1,7 @@
 using Survivors.Weapons;
 using UniRx;
 
-namespace Survivors.Weapons
+namespace Survivors.Scripts.Contracts
 {
     public interface IPlayerWeaponsData
     {

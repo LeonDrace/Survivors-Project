@@ -1,8 +1,10 @@
+using JetBrains.Annotations;
 using Survivors.Scripts.Contracts;
 using UniRx;
 
 namespace Survivors.Enemy
 {
+    [UsedImplicitly]
     public class EnemyKillCounterModel
     {
         private readonly IEnemies m_Data;

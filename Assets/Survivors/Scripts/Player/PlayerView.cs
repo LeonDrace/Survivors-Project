@@ -1,30 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Survivors.Player
+namespace Survivors.Scripts.Player
 {
-	public class PlayerView : MonoBehaviour
-	{
-		[SerializeField, Range(float.Epsilon, 5f)]
-		private float m_Speed;
-		[SerializeField]
-		private Slider m_HealthSlider;
-		[SerializeField]
-		private SpriteRenderer m_DamageRenderer;
+    public class PlayerView : MonoBehaviour
+    {
+        [SerializeField] private float _speed;
+        [SerializeField] private Slider _healthSlider;
+        [SerializeField] private SpriteRenderer _damageRenderer;
 
-		public Slider HealthSlider => m_HealthSlider;
-		public SpriteRenderer DamageRenderer => m_DamageRenderer;
+        public Slider HealthSlider => _healthSlider;
+        public SpriteRenderer DamageRenderer => _damageRenderer;
 
-		public void Move(Vector2 direction)
-		{
-			var oldPosition = transform.position;
-			transform.position = Vector3.Lerp(oldPosition, oldPosition + (Vector3)direction * m_Speed,
-				Time.deltaTime);
-		}
-
-		public Vector2 Position
-		{
-			get => transform.position;
-		}
-	}
+        public void Move(Vector2 direction)
+        {
+            var oldPosition = transform.position;
+            transform.position = Vector3.Lerp(oldPosition, oldPosition + (Vector3)direction * _speed,
+                Time.deltaTime);
+        }
+    }
 }

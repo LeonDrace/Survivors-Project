@@ -1,58 +1,61 @@
-using Survivors.Input;
 using System;
+using Survivors.Input;
+using Survivors.Scripts.Contracts;
 using UniRx;
 using UnityEngine;
 
-namespace Survivors.Player
+namespace Survivors.Scripts.Player
 {
-	public class PlayerPresenter : IPlayerTransformData
-	{
-		private readonly PlayerView m_View;
-		private readonly PlayerModel m_Model;
+    public class PlayerPresenter : IPlayerTransformData
+    {
+        private readonly PlayerView _view;
+        private readonly PlayerModel _model;
 
-		public Transform Transform => m_View.transform;
+        public Transform Transform => _view.transform;
 
-		public PlayerPresenter(Joystick joystick,
-			PlayerView playerView, PlayerModel playerModel, CompositeDisposable disposables)
-		{
-			m_Model = playerModel;
-			m_View = playerView;
+        public PlayerPresenter(
+            Joystick joystick,
+            PlayerView playerView,
+            PlayerModel playerModel,
+            CompositeDisposable disposables)
+        {
+            _model = playerModel;
+            _view = playerView;
 
-			m_Model.CurrentHealth
-				.Where(x => x <= 0)
-				.Subscribe(_ => m_Model.IsDead.Value = true)
-				.AddTo(disposables);
+            _model.CurrentHealth
+                .Where(x => x <= 0)
+                .Subscribe(_ => _model.IsDead.Value = true)
+                .AddTo(disposables);
 
-			m_Model.CurrentHealth
-				.Subscribe(x => m_Model.CurrentHealthPercentage.Value = x / m_Model.BaseHealth)
-				.AddTo(disposables);
+            _model.CurrentHealth
+                .Subscribe(x => _model.CurrentHealthPercentage.Value = x / _model.BaseHealth)
+                .AddTo(disposables);
 
-			//Move
-			joystick.OnInput
-				.TakeWhile(_ => !m_Model.IsDead.Value)
-				.Subscribe(playerView.Move)
-				.AddTo(disposables);
+            //Move
+            joystick.OnInput
+                .TakeWhile(_ => !_model.IsDead.Value)
+                .Subscribe(playerView.Move)
+                .AddTo(disposables);
 
-			//Damage
-			m_Model.CurrentHealthPercentage
-				.Subscribe(x =>
-				{
-					if (x < 1)
-					{
-						m_View.DamageRenderer.enabled = true;
+            //Damage
+            _model.CurrentHealthPercentage
+                .Subscribe(x =>
+                {
+                    if (x < 1)
+                    {
+                        _view.DamageRenderer.enabled = true;
 
-						Observable
-							.Timer(TimeSpan.FromSeconds(m_Model.DamageFlickerDuration))
-							.Subscribe(x => { m_View.DamageRenderer.enabled = false; })
-							.AddTo(disposables);
-					}
+                        Observable
+                            .Timer(TimeSpan.FromSeconds(_model.DamageFlickerDuration))
+                            .Subscribe(x => { _view.DamageRenderer.enabled = false; })
+                            .AddTo(disposables);
+                    }
+                })
+                .AddTo(disposables);
 
-				})
-				.AddTo(disposables);
-
-			//Current health
-			m_Model.CurrentHealthPercentage
-				.Subscribe(x => m_View.HealthSlider.value = x);
-		}
-	}
+            //Current health
+            _model.CurrentHealthPercentage
+                .Subscribe(x => _view.HealthSlider.value = x);
+        }
+    }
 }

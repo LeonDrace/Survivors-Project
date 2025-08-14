@@ -13,14 +13,12 @@ MonoBehaviour:
   m_Name: EnemySettings_Fast
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Fast
-  <Prefab>k__BackingField: {fileID: 5933081570010237410, guid: 129b2bb3f9ca2af41be36d8e44fc185b, type: 3}
-  <Color>k__BackingField: {r: 1, g: 0.9647059, b: 0, a: 1}
-  <Sprite>k__BackingField: {fileID: -2413806693520163455, guid: 4c8f420b2e70e0b4693bee167e7be7c3, type: 3}
+  <Prefab>k__BackingField: {fileID: 7913739121471198614, guid: bda3e733c824d4a4489d7e6be34a931c, type: 3}
   <Health>k__BackingField: 2
-  <StoppingDistance>k__BackingField: 0
-  <Range>k__BackingField: 1.5
+  <AttackRange>k__BackingField: 1
   <Damage>k__BackingField: 1
-  <DamageCooldown>k__BackingField: 1
-  <Speed>k__BackingField: 2
+  <AttackSpeed>k__BackingField: 1
   <DamageFlickerDuration>k__BackingField: 0.16
-  <PathfindingInverval>k__BackingField: 20
+  <Speed>k__BackingField: 2
+  <StoppingDistance>k__BackingField: 0
+  <PathfindingInterval>k__BackingField: 20

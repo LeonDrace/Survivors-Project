@@ -1,13 +1,12 @@
-using Survivors.Weapons;
 using UniRx;
-using UnityEngine;
 
-namespace Survivors.Player
+namespace Survivors.Scripts.Contracts
 {
     public interface IPlayerHealthData
     {
-        public ReactiveProperty<float> CurrentHealth { get; set; }
-        public ReactiveProperty<float> CurrentHealthPercentage { get; set; }
-        public ReactiveProperty<bool> IsDead { get; set; }
+        public void ChangeHealth(float change);
+        public ReactiveProperty<float> CurrentHealth { get; }
+        public ReactiveProperty<float> CurrentHealthPercentage { get; }
+        public ReactiveProperty<bool> IsDead { get; }
     }
 }

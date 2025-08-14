@@ -13,14 +13,12 @@ MonoBehaviour:
   m_Name: EnemySettings_Slow
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Slow
-  <Prefab>k__BackingField: {fileID: 5933081570010237410, guid: 129b2bb3f9ca2af41be36d8e44fc185b, type: 3}
-  <Color>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
-  <Sprite>k__BackingField: {fileID: 7482667652216324306, guid: 8bb30b6b2ee6f064c897f56f59adbbc9, type: 3}
+  <Prefab>k__BackingField: {fileID: 7913739121471198614, guid: fde7a795c6e52934e962a142a5a3dcdc, type: 3}
   <Health>k__BackingField: 3
-  <StoppingDistance>k__BackingField: 0
-  <Range>k__BackingField: 1.5
+  <AttackRange>k__BackingField: 1
   <Damage>k__BackingField: 2
-  <DamageCooldown>k__BackingField: 1
-  <Speed>k__BackingField: 1.5
+  <AttackSpeed>k__BackingField: 1
   <DamageFlickerDuration>k__BackingField: 0.16
-  <PathfindingInverval>k__BackingField: 20
+  <Speed>k__BackingField: 1.5
+  <StoppingDistance>k__BackingField: 0
+  <PathfindingInterval>k__BackingField: 20

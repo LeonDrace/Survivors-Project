@@ -1,6 +1,6 @@
 ﻿using Survivors.Enemy;
 using Survivors.Scripts.Enemies;
-using Survivors.Scripts.Enemies.Enemy;
+using Survivors.Scripts.Enemies.Core;
 using Zenject;
 
 namespace Survivors.Extensions
@@ -9,9 +9,9 @@ namespace Survivors.Extensions
     {
         public static DiContainer InstallEnemy(this DiContainer container)
         {
-            container.BindInterfacesAndSelfTo<EnemiesContainer>().AsSingle();
-            container.Bind<EnemyModel>().AsTransient();
-            container.Bind<EnemyFactory>().AsSingle().NonLazy();
+            container.BindInterfacesAndSelfTo<EnemyComponentManager>().AsSingle();
+            container.BindInterfacesAndSelfTo<EnemySpawner>().AsSingle();
+            container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
             container.Bind<EnemyKillCounterModel>().AsSingle();
             container.Bind<EnemyKillCounterPresenter>().AsSingle().NonLazy();
 

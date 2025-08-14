@@ -1,4 +1,4 @@
-using Survivors.Scripts.Enemies.Enemy;
+using Survivors.Scripts.Contracts;
 using UniRx;
 using UnityEngine;
 
@@ -24,7 +24,7 @@ namespace Survivors.Weapons
 
         public void OnHit(Collider2D collision)
         {
-            collision.gameObject.GetComponent<EnemyView>().DealDamage(m_Model.Damage);
+            collision.gameObject.GetComponent<IDealDamage>().DealDamage(m_Model.Damage);
             Destroy();
         }
 

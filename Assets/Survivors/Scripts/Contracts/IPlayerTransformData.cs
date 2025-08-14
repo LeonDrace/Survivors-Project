@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Survivors.Player
+namespace Survivors.Scripts.Contracts
 {
     public interface IPlayerTransformData
     {
