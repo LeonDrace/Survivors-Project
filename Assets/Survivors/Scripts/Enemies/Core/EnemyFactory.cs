@@ -13,33 +13,36 @@ namespace Survivors.Scripts.Enemies.Core
     [UsedImplicitly]
     public sealed class EnemyFactory : IEnemyFactory
     {
-        private readonly IEnemyManager _enemyManager;
-        private readonly EnemySettings[] _enemySettings;
+        private readonly IEnemyManager _componentManager;
+        private readonly IEnemyPools _pools;
+        private readonly EnemySettings[] _settings;
 
         public EnemyFactory(
-            IEnemyManager enemyManager,
-            EnemySettings[] enemySettings)
+            IEnemyManager componentManager,
+            IEnemyPools enemyPools,
+            EnemySettings[] settings)
         {
-            _enemyManager = enemyManager;
-            _enemySettings = enemySettings;
-            enemyManager.AddSharedData(Array.ConvertAll(_enemySettings, item => (ISharedEnemyData)item));
+            _componentManager = componentManager;
+            _pools = enemyPools;
+            _settings = settings;
+            componentManager.AddSharedData(Array.ConvertAll(_settings, item => (ISharedEnemyData)item));
         }
 
         public void Create(Vector2 position)
         {
-            int settingsIndex = GetRandomSettingsIndex();
-            EnemySettings settings = _enemySettings[settingsIndex];
-            IEnemyView view = Object.Instantiate(settings.Prefab, position, Quaternion.identity);
+            var settingsIndex = GetRandomSettingsIndex();
+            var settings = _settings[settingsIndex];
+            var view = _pools.PopEnemyView(settings.ConfigId, position, Quaternion.identity);
 
-            EnemyTransform transform = new EnemyTransform(position);
-            EnemyVitals vitals = new EnemyVitals(settings.Health);
+            var transform = new EnemyTransform(position);
+            var vitals = new EnemyVitals(settings.Health);
 
-            _enemyManager.AddEnemy(view, transform, vitals, settingsIndex);
+            _componentManager.AddEnemy(view, transform, vitals, settingsIndex);
         }
 
         private int GetRandomSettingsIndex()
         {
-            return Random.Range(0, _enemySettings.Length);
+            return Random.Range(0, _settings.Length);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Survivors.Scripts.Enemies.Settings
     public class EnemySettings : ScriptableObject, ISharedEnemyData
     {
         //Meta
-        [field: SerializeField] public string Name { get; private set; } = "New";
+        [field: SerializeField] public string ConfigId { get; private set; } = "New";
         [field: SerializeField] public EnemyView Prefab { get; private set; }
 
         //Basic Stats

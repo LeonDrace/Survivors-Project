@@ -12,6 +12,7 @@ namespace Survivors.Extensions
             container.BindInterfacesAndSelfTo<EnemyComponentManager>().AsSingle();
             container.BindInterfacesAndSelfTo<EnemySpawner>().AsSingle();
             container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
+            container.BindInterfacesAndSelfTo<EnemyPools>().AsSingle();
             container.Bind<EnemyKillCounterModel>().AsSingle();
             container.Bind<EnemyKillCounterPresenter>().AsSingle().NonLazy();
 

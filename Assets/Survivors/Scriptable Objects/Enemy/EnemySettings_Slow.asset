@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c9a424b3b1d74439d5620a7c43f628, type: 3}
   m_Name: EnemySettings_Slow
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Slow
+  <ConfigId>k__BackingField: enemy_slow
   <Prefab>k__BackingField: {fileID: 7913739121471198614, guid: fde7a795c6e52934e962a142a5a3dcdc, type: 3}
   <Health>k__BackingField: 3
   <AttackRange>k__BackingField: 1
   <Damage>k__BackingField: 2
   <AttackSpeed>k__BackingField: 1
-  <DamageFlickerDuration>k__BackingField: 0.16
   <Speed>k__BackingField: 1.5
   <StoppingDistance>k__BackingField: 0
   <PathfindingInterval>k__BackingField: 20

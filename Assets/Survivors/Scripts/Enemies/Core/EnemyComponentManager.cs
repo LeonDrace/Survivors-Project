@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using Survivors.Scripts.Constants;
 using Survivors.Scripts.Contracts;
 using Survivors.Scripts.Enemies.Components;
 using UniRx;
@@ -13,6 +14,7 @@ namespace Survivors.Scripts.Enemies.Core
     {
         private readonly Transform _playerTransform;
         private readonly IPlayerHealthData _playerHealthData;
+        private readonly IEnemyPools _pools;
 
         private int[] _sharedDataIndex;
         private ISharedEnemyData[] _sharedEnemyData;
@@ -22,8 +24,6 @@ namespace Survivors.Scripts.Enemies.Core
         private float[] _attackCooldowns;
         private IEnemyView[] _views;
 
-
-        private const int Capacity = 128;
         private int _capacity;
         private int _count;
         private Vector2 _currentPlayerPosition;
@@ -33,12 +33,14 @@ namespace Survivors.Scripts.Enemies.Core
 
         public EnemyComponentManager(
             IPlayerTransformData playerTransformData,
-            IPlayerHealthData playerHealthData)
+            IPlayerHealthData playerHealthData,
+            IEnemyPools enemyPools)
         {
             _playerTransform = playerTransformData.Transform;
             _playerHealthData = playerHealthData;
+            _pools = enemyPools;
 
-            _capacity = Capacity;
+            _capacity = EnemyConstants.ComponentsCapacity;
 
             _transforms = new EnemyTransform[_capacity];
             _vitals = new EnemyVitals[_capacity];
@@ -140,7 +142,8 @@ namespace Survivors.Scripts.Enemies.Core
 
         public void RemoveEnemy(int index)
         {
-            _views[index].Dispose();
+            _views[index].OnDespawn();
+            _pools.PutEnemyView(GetSharedData(index).ConfigId, _views[index]);
 
             _views[index] = _views[_count - 1];
             _vitals[index] = _vitals[_count - 1];
@@ -156,7 +159,7 @@ namespace Survivors.Scripts.Enemies.Core
         public void Clear()
         {
             _count = 0;
-            foreach (var view in _views) view?.Dispose();
+            foreach (var view in _views) view?.OnDespawn();
         }
 
         #endregion

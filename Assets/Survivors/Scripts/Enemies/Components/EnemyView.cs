@@ -1,6 +1,8 @@
+using System;
 using JetBrains.Annotations;
 using Survivors.Scripts.Contracts;
 using UnityEngine;
+using Object = System.Object;
 
 namespace Survivors.Scripts.Enemies.Components
 {
@@ -31,9 +33,9 @@ namespace Survivors.Scripts.Enemies.Components
             SetDamageIndicator(_showIndicator);
         }
 
-        public void Dispose()
+        public void OnDespawn()
         {
-            Destroy(gameObject);
+            //Todo: Play Death Particle effect.
         }
 
         public void OnTick()
@@ -54,9 +56,20 @@ namespace Survivors.Scripts.Enemies.Components
             transform.SetPositionAndRotation(position, rotation);
         }
 
+        public void SetState(bool state)
+        {
+            if (gameObject.activeSelf != state)
+                gameObject.SetActive(state);
+        }
+
         public void SetDamageIndicator(bool state)
         {
             if (_damageRenderer != null) _damageRenderer.enabled = state;
+        }
+
+        public void Dispose()
+        {
+            Destroy(gameObject);
         }
     }
 }
