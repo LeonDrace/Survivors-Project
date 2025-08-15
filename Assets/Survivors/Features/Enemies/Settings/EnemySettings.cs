@@ -1,5 +1,6 @@
 ﻿using Survivors.Features.Contracts;
 using Survivors.Features.Enemies.Components;
+using Survivors.Features.VFX;
 using UnityEngine;
 
 namespace Survivors.Features.Enemies.Settings
@@ -10,6 +11,7 @@ namespace Survivors.Features.Enemies.Settings
         //Meta
         [field: SerializeField] public string ConfigId { get; private set; } = "New";
         [field: SerializeField] public EnemyView Prefab { get; private set; }
+        [field: SerializeField] public ParticleManager DeathParticles { get; private set; }
 
         //Basic Stats
         [field: SerializeField] public float Health { get; private set; } = 3;
@@ -19,7 +21,5 @@ namespace Survivors.Features.Enemies.Settings
 
         //Pathing
         [field: SerializeField] public float Speed { get; private set; } = 1.75f;
-        [field: SerializeField] public float StoppingDistance { get; private set; } = 1;
-        [field: SerializeField] public int PathfindingInterval { get; private set; } = 20;
     }
 }

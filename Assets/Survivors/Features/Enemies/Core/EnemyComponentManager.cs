@@ -3,6 +3,8 @@ using JetBrains.Annotations;
 using Survivors.Features.Constants;
 using Survivors.Features.Contracts;
 using Survivors.Features.Enemies.Components;
+using Survivors.Features.Enemies.Contexts;
+using Survivors.Features.Enemies.Settings;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -10,35 +12,41 @@ using Zenject;
 namespace Survivors.Features.Enemies.Core
 {
     [UsedImplicitly]
-    public class EnemyComponentManager : ITickable, IEnemyManager, IEnemies
+    public class EnemyComponentManager : ITickable, IEnemyComponentManager, IEnemies, IDisposable
     {
         private readonly Transform _playerTransform;
         private readonly IPlayerHealthData _playerHealthData;
-        private readonly IEnemyPools _pools;
+        private readonly ISharedEnemyData[] _sharedEnemyData;
 
+        // Enemy core components
         private int[] _sharedDataIndex;
-        private ISharedEnemyData[] _sharedEnemyData;
-
         private EnemyTransform[] _transforms;
         private EnemyVitals[] _vitals;
         private float[] _attackCooldowns;
         private IEnemyView[] _views;
+
+        // Dynamic Components
+        private IParticleManager[] _particles;
+        private int _particlesCount;
 
         private int _capacity;
         private int _count;
         private Vector2 _currentPlayerPosition;
 
         public int Count => _count;
+        public int GetId => _count;
         public ReactiveProperty<int> KilledEnemies { get; }
 
         public EnemyComponentManager(
+            EnemySettings[] settings,
             IPlayerTransformData playerTransformData,
             IPlayerHealthData playerHealthData,
-            IEnemyPools enemyPools)
+            CompositeDisposable compositeDisposable)
         {
+            _sharedEnemyData = Array.ConvertAll(settings, item => (ISharedEnemyData)item);
             _playerTransform = playerTransformData.Transform;
             _playerHealthData = playerHealthData;
-            _pools = enemyPools;
+            compositeDisposable.Add(this);
 
             _capacity = EnemyConstants.ComponentsCapacity;
 
@@ -47,6 +55,7 @@ namespace Survivors.Features.Enemies.Core
             _views = new IEnemyView[_capacity];
             _sharedDataIndex = new int[_capacity];
             _attackCooldowns = new float[_capacity];
+            _particles = new IParticleManager[_capacity];
             KilledEnemies = new ReactiveProperty<int>(0);
         }
 
@@ -74,6 +83,12 @@ namespace Survivors.Features.Enemies.Core
         public void Tick()
         {
             _currentPlayerPosition = _playerTransform.position;
+            UpdateEnemies();
+            UpdateParticles();
+        }
+
+        private void UpdateEnemies()
+        {
             for (var i = _count - 1; i >= 0; i--)
             {
                 if (IsDead(i))
@@ -104,54 +119,46 @@ namespace Survivors.Features.Enemies.Core
             _transforms[index].Populate(position, newRotation);
         }
 
-        private void UpdateView(int i)
+        private void UpdateView(int index)
         {
-            _views[i].OnTick();
-            _views[i].UpdatePositionAndRotation(_transforms[i].Position, _transforms[i].Rotation);
+            _views[index].OnTick();
+            _views[index].UpdatePositionAndRotation(_transforms[index].Position, _transforms[index].Rotation);
         }
 
-        private bool IsDead(int i)
+        private bool IsDead(int index)
         {
-            return _vitals[i].CurrentHealth <= 0;
+            return _vitals[index].CurrentHealth <= 0;
         }
 
         #endregion
 
         #region Add / Remove
 
-        public void AddSharedData(ISharedEnemyData[] sharedData)
-        {
-            _sharedEnemyData = sharedData;
-        }
-
-        public void AddEnemy(IEnemyView view, in EnemyTransform transform, in EnemyVitals vitals, int sharedDataIndex)
+        public void AddEnemy(in EnemyComponentContext context)
         {
             if (_count == _capacity)
                 Resize();
 
-            view.Initialize(this, _count);
-
-            _sharedDataIndex[_count] = sharedDataIndex;
-            _transforms[_count] = transform;
-            _vitals[_count] = vitals;
-            _views[_count] = view;
+            _sharedDataIndex[_count] = context.DataIndex;
+            _transforms[_count] = context.Transform;
+            _vitals[_count] = context.Vitals;
+            _views[_count] = context.View;
             _attackCooldowns[_count] = 0f;
 
             _count++;
         }
 
-        public void RemoveEnemy(int index)
+        public void RemoveEnemy(int id)
         {
-            _views[index].OnDespawn();
-            _pools.PutEnemyView(GetSharedData(index).ConfigId, _views[index]);
+            _views[id].OnDespawn();
 
-            _views[index] = _views[_count - 1];
-            _vitals[index] = _vitals[_count - 1];
-            _transforms[index] = _transforms[_count - 1];
-            _sharedDataIndex[index] = _sharedDataIndex[_count - 1];
-            _attackCooldowns[index] = _attackCooldowns[_count - 1];
+            _views[id] = _views[_count - 1];
+            _vitals[id] = _vitals[_count - 1];
+            _transforms[id] = _transforms[_count - 1];
+            _sharedDataIndex[id] = _sharedDataIndex[_count - 1];
+            _attackCooldowns[id] = _attackCooldowns[_count - 1];
 
-            _views[index].Index = index;
+            _views[id].Id = id;
 
             _count--;
         }
@@ -159,18 +166,20 @@ namespace Survivors.Features.Enemies.Core
         public void Clear()
         {
             _count = 0;
-            foreach (var view in _views) view?.OnDespawn();
+            _particlesCount = 0;
+            foreach (var view in _views) view?.Dispose();
+            foreach (var particle in _particles) particle?.Dispose();
         }
 
         #endregion
 
         #region Health
 
-        public void ChangeHealth(int index, float change)
+        public void ChangeHealth(int id, float change)
         {
-            var newHealth = _vitals[index].CurrentHealth + change;
-            newHealth = Math.Clamp(newHealth, 0f, _vitals[index].MaxHealth);
-            _vitals[index].CurrentHealth = newHealth;
+            var newHealth = _vitals[id].CurrentHealth + change;
+            newHealth = Math.Clamp(newHealth, 0f, _vitals[id].MaxHealth);
+            _vitals[id].CurrentHealth = newHealth;
         }
 
         #endregion
@@ -195,5 +204,41 @@ namespace Survivors.Features.Enemies.Core
         }
 
         #endregion
+
+        #region Update Particles
+
+        public void AddParticle(IParticleManager particleManager)
+        {
+            if (_particles.Length == _particlesCount)
+                ResizeParticles();
+
+            _particles[_particlesCount] = particleManager;
+            _particlesCount++;
+        }
+
+        private void UpdateParticles()
+        {
+            for (var i = _particlesCount - 1; i >= 0; i--)
+            {
+                if (_particles[i].IsPlaying) continue;
+
+                _particles[i].Despawn();
+                _particles[i] = _particles[_particlesCount - 1];
+                _particlesCount--;
+            }
+        }
+
+        private void ResizeParticles()
+        {
+            var capacity = _particles.Length * 2;
+            Array.Resize(ref _particles, capacity);
+        }
+
+        #endregion
+
+        public void Dispose()
+        {
+            Clear();
+        }
     }
 }

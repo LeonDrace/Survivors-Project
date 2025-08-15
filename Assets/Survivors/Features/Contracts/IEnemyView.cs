@@ -1,13 +1,15 @@
+using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Survivors.Features.Contracts
 {
     public interface IEnemyView
     {
-        int Index { get; set; }
+        int Id { get; set; }
         Transform Transform { get; }
 
-        void Initialize(IEnemyManager enemyManager, int index);
+        void Initialize(int id, [NotNull] Action<int, float> onTakeDamage, [CanBeNull] Action<Vector2> onDespawn);
         void OnDespawn();
         void Dispose();
         void OnTick();

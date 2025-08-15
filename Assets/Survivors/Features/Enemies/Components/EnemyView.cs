@@ -1,31 +1,38 @@
+using System;
 using JetBrains.Annotations;
 using Survivors.Features.Contracts;
 using UnityEngine;
 
 namespace Survivors.Features.Enemies.Components
 {
-    public class EnemyView : MonoBehaviour, IEnemyView, IDealDamage
+    public class EnemyView : MonoBehaviour, IEnemyView, ITakeDamage
     {
         [SerializeField] [CanBeNull] private SpriteRenderer _damageRenderer;
         [SerializeField] private float _damageFlickerDuration;
 
-        private IEnemyManager _enemyManager;
-
         public Transform Transform => transform;
-        public int Index { get; set; }
+
+        public int Id { get; set; }
 
         private float _indicatorCounter;
         private bool _showIndicator;
 
-        public void Initialize(IEnemyManager enemyManager, int index)
+        private Action<int, float> _onTakeDamage;
+        private Action<Vector2> _onDespawn;
+
+        public void Initialize(
+            int id,
+            Action<int, float> onTakeDamage,
+            Action<Vector2> onDespawn)
         {
-            _enemyManager = enemyManager;
-            Index = index;
+            Id = id;
+            _onTakeDamage = onTakeDamage;
+            _onDespawn = onDespawn;
         }
 
-        public void DealDamage(float damage)
+        public void TakeDamage(float damage)
         {
-            _enemyManager.ChangeHealth(Index, -damage);
+            _onTakeDamage?.Invoke(Id, -damage);
             _indicatorCounter = 0;
             _showIndicator = true;
             SetDamageIndicator(_showIndicator);
@@ -33,7 +40,7 @@ namespace Survivors.Features.Enemies.Components
 
         public void OnDespawn()
         {
-            //Todo: Play Death Particle effect.
+            _onDespawn?.Invoke(transform.position);
         }
 
         public void OnTick()
@@ -67,7 +74,8 @@ namespace Survivors.Features.Enemies.Components
 
         public void Dispose()
         {
-            Destroy(gameObject);
+            _onDespawn = null;
+            _onTakeDamage = null;
         }
     }
 }

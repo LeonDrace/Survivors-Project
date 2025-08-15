@@ -10,7 +10,7 @@ namespace Survivors.Features.Enemies.Core
     public class EnemySpawner : ITickable
     {
         private readonly SpawnSettings _spawnSettings;
-        private readonly IEnemyManager _enemyManager;
+        private readonly IEnemyComponentManager _enemyComponentManager;
         private readonly IEnemyFactory _enemyFactory;
         private readonly Camera _camera;
 
@@ -18,21 +18,18 @@ namespace Survivors.Features.Enemies.Core
 
         public EnemySpawner(
             SpawnSettings spawnSettings,
-            IEnemyManager enemyManager,
+            IEnemyComponentManager enemyComponentManager,
             IEnemyFactory enemyFactory)
         {
             _spawnSettings = spawnSettings;
-            _enemyManager = enemyManager;
+            _enemyComponentManager = enemyComponentManager;
             _enemyFactory = enemyFactory;
             _camera = Camera.main;
         }
 
         public void Tick()
         {
-            if (CanSpawn())
-            {
-                SpawnEnemies();
-            }
+            if (CanSpawn()) SpawnEnemies();
         }
 
         private bool CanSpawn()
@@ -50,15 +47,14 @@ namespace Survivors.Features.Enemies.Core
 
         private void SpawnEnemies()
         {
-            if (_enemyManager.Count >= _spawnSettings.MaxSpawnAmount) return;
+            if (_enemyComponentManager.Count >= _spawnSettings.MaxSpawnAmount) return;
 
-            int amount = _spawnSettings.GetSpawnAmount();
+            var amount = _spawnSettings.GetSpawnAmount();
             for (var i = 0; i < amount; i++)
             {
-                if (TrySpawnEnemy(out Vector2 spawnPosition))
-                {
-                    _enemyFactory.Create(spawnPosition);
-                }
+                if (!TrySpawnEnemy(out var spawnPosition)) continue;
+                var context = _enemyFactory.CreateEnemy(_enemyComponentManager, spawnPosition);
+                _enemyComponentManager.AddEnemy(in context);
             }
         }
 

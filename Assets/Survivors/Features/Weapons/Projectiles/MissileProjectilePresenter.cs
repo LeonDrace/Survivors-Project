@@ -24,7 +24,7 @@ namespace Survivors.Features.Weapons.Projectiles
 
         public void OnHit(Collider2D collision)
         {
-            collision.gameObject.GetComponent<IDealDamage>().DealDamage(m_Model.Damage);
+            collision.gameObject.GetComponent<ITakeDamage>().TakeDamage(m_Model.Damage);
             Destroy();
         }
 

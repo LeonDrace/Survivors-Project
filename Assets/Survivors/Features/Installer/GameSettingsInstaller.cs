@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Survivors.Features.Installer
 {
-    [CreateAssetMenu(fileName = "Survivors/GamesettingsInstaller", menuName = "Survivors/Game Settings Installer")]
+    [CreateAssetMenu(fileName = "Survivors/GameSettingsInstaller", menuName = "Survivors/Game Settings Installer")]
     public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller>
     {
         [SerializeField] private SpawnSettings _spawnSettings;

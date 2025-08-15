@@ -6,11 +6,11 @@ namespace Survivors.Features.Installer
 {
 	public class GameInstaller : MonoInstaller<GameInstaller>
 	{
-		private readonly CompositeDisposable m_Disposer = new();
+		private readonly CompositeDisposable _disposer = new();
 
 		public override void InstallBindings()
 		{
-			Container.BindInstance(m_Disposer);
+			Container.BindInstance(_disposer);
 			Container.InstallPlayer();
 			Container.InstallWeapons();
 			Container.InstallEnemy();
@@ -19,7 +19,7 @@ namespace Survivors.Features.Installer
 
 		private void OnDestroy()
 		{
-			m_Disposer.Dispose();
+			_disposer.Dispose();
 		}
 	}
 }
