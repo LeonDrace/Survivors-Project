@@ -2,60 +2,56 @@ using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Survivors.Features.UI.Controls
 {
-	public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
-	{
-		[SerializeField]
-		private Image m_Stick;
-		[SerializeField]
-		private RectTransform m_StickParent;
+    public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    {
+        [SerializeField] private Image _stick;
+        [SerializeField] private RectTransform _stickParent;
 
-		private readonly Subject<Vector2> _onInput = new();
-		private bool _isDragging;
+        private readonly Subject<Vector2> _onInput = new();
+        private bool _isDragging;
 
-		public IObservable<Vector2> OnInput => _onInput;
+        public IObservable<Vector2> OnInput => _onInput;
 
-		private void Update()
-		{
-			if (_isDragging)
-			{
-				var stickPosition = m_StickParent.InverseTransformPoint(UnityEngine.Input.mousePosition);
-				var stickParentRect = m_StickParent.rect;
+        private void FixedUpdate()
+        {
+            if (_isDragging)
+            {
+                var stickPosition = _stickParent.InverseTransformPoint(Input.mousePosition);
+                var stickParentRect = _stickParent.rect;
 
-				var radius = stickParentRect.width / 2;
-				var distance = stickPosition.magnitude;
-				if (distance > radius)
-				{
-					stickPosition = stickPosition.normalized * radius;
-				}
+                var radius = stickParentRect.width / 2;
+                var distance = stickPosition.magnitude;
+                if (distance > radius) stickPosition = stickPosition.normalized * radius;
 
-				m_Stick.rectTransform.localPosition = stickPosition;
-				_onInput.OnNext(m_Stick.rectTransform.localPosition / radius);
-			}
-		}
+                _stick.rectTransform.localPosition = stickPosition;
+                _onInput.OnNext(_stick.rectTransform.localPosition / radius);
+            }
+        }
 
-		public void OnPointerDown(PointerEventData eventData)
-		{
-			_isDragging = true;
-		}
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            _isDragging = true;
+        }
 
-		public void OnPointerUp(PointerEventData eventData)
-		{
-			ResetStick();
-		}
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            ResetStick();
+        }
 
-		private void OnApplicationPause(bool pauseStatus)
-		{
-			ResetStick();
-		}
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            ResetStick();
+        }
 
-		private void ResetStick()
-		{
-			_isDragging = false;
-			m_Stick.rectTransform.localPosition = Vector2.zero;
-		}
-	}
+        private void ResetStick()
+        {
+            _isDragging = false;
+            _stick.rectTransform.localPosition = Vector2.zero;
+        }
+    }
 }

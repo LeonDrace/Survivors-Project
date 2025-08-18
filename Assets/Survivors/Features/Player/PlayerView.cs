@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,15 +9,14 @@ namespace Survivors.Features.Player
         [SerializeField] private float _speed;
         [SerializeField] private Slider _healthSlider;
         [SerializeField] private SpriteRenderer _damageRenderer;
+        [SerializeField] private Rigidbody2D _rigidbody2D;
 
         public Slider HealthSlider => _healthSlider;
         public SpriteRenderer DamageRenderer => _damageRenderer;
 
         public void Move(Vector2 direction)
         {
-            var oldPosition = transform.position;
-            transform.position = Vector3.Lerp(oldPosition, oldPosition + (Vector3)direction * _speed,
-                Time.deltaTime);
+            _rigidbody2D.MovePosition(_rigidbody2D.position + direction * (_speed * Time.deltaTime));
         }
     }
 }

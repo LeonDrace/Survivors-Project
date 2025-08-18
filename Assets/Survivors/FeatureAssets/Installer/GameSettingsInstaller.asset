@@ -17,3 +17,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ddadade900e1944590bfa6c33ac5ce3, type: 2}
   - {fileID: 11400000, guid: 4e528165e0980eb4d98a08dc8adf8519, type: 2}
   _characterSettings: {fileID: 11400000, guid: cda4579f6cff8024f8cad1d207b06fae, type: 2}
+  _mapSettings: {fileID: 11400000, guid: 3f5e44cddf040e34ba534328befb80a7, type: 2}

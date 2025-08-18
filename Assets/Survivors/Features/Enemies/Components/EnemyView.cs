@@ -9,6 +9,7 @@ namespace Survivors.Features.Enemies.Components
     {
         [SerializeField] [CanBeNull] private SpriteRenderer _damageRenderer;
         [SerializeField] private float _damageFlickerDuration;
+        [SerializeField] private Rigidbody2D _rigidbody2D;
 
         public Transform Transform => transform;
 
@@ -59,6 +60,12 @@ namespace Survivors.Features.Enemies.Components
         public void UpdatePositionAndRotation(Vector2 position, Quaternion rotation)
         {
             transform.SetPositionAndRotation(position, rotation);
+        }
+
+        public void UpdateVelocityAndRotation(Vector2 velocity, Quaternion rotation)
+        {
+            _rigidbody2D.MovePosition(_rigidbody2D.position + velocity);
+            _rigidbody2D.MoveRotation(rotation);
         }
 
         public void SetState(bool state)

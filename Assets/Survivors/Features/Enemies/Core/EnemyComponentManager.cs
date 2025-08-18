@@ -12,7 +12,7 @@ using Zenject;
 namespace Survivors.Features.Enemies.Core
 {
     [UsedImplicitly]
-    public class EnemyComponentManager : ITickable, IEnemyComponentManager, IEnemies, IDisposable
+    public class EnemyComponentManager : IFixedTickable, IEnemyComponentManager, IEnemies, IDisposable
     {
         private readonly Transform _playerTransform;
         private readonly IPlayerHealthData _playerHealthData;
@@ -80,7 +80,7 @@ namespace Survivors.Features.Enemies.Core
 
         #region Update
 
-        public void Tick()
+        public void FixedTick()
         {
             _currentPlayerPosition = _playerTransform.position;
             UpdateEnemies();
@@ -107,22 +107,21 @@ namespace Survivors.Features.Enemies.Core
         private void UpdateTransform(int index)
         {
             var delta = GetSharedData(index).Speed * Time.deltaTime;
-            var position = _transforms[index].Position;
+            var position = (Vector2)_views[index].Transform.position;
 
             //Look at only using z-axis
             var dir = _currentPlayerPosition - position;
             var rotationZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             var newRotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
+            var velocity = dir.normalized * delta;
 
-            position = Vector2.MoveTowards(position, _currentPlayerPosition, delta);
-
-            _transforms[index].Populate(position, newRotation);
+            _transforms[index].Populate(position, velocity, newRotation);
         }
 
         private void UpdateView(int index)
         {
             _views[index].OnTick();
-            _views[index].UpdatePositionAndRotation(_transforms[index].Position, _transforms[index].Rotation);
+            _views[index].UpdateVelocityAndRotation(_transforms[index].Velocity, _transforms[index].Rotation);
         }
 
         private bool IsDead(int index)

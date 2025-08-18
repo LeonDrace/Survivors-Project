@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: prefab_enemy_fast
       objectReference: {fileID: 0}
+    - target: {fileID: 6471783063462330380, guid: 129b2bb3f9ca2af41be36d8e44fc185b, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7521107774609063131, guid: 129b2bb3f9ca2af41be36d8e44fc185b, type: 3}
       propertyPath: m_Sprite
       value: 

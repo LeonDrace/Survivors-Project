@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaadc27b7940b144f940a498dd786507, type: 3}
-  m_Name: SpawnSettings
+  m_Script: {fileID: 11500000, guid: 08507b633ebb6124a9145e639c2f1e80, type: 3}
+  m_Name: MapSettings
   m_EditorClassIdentifier: 
-  <SpawnIntervalRange>k__BackingField: {x: 0.25, y: 1}
-  <SpawnAmountRange>k__BackingField: {x: 1, y: 5}
-  <MaxSpawnAmount>k__BackingField: 150
-  <SpawnOffset>k__BackingField: {x: 100, y: 100}
+  <Prefab>k__BackingField: {fileID: 7711650598552047818, guid: 7f9adb955ca2fef41bc2c87949d819b0, type: 3}
+  <MapSize>k__BackingField: {x: 70, y: 70}

@@ -22,7 +22,7 @@ MonoBehaviour:
   <ProjectileSpawnRadius>k__BackingField: 1
   <ProjectileSprite>k__BackingField: {fileID: -2413806693520163455, guid: 4c8f420b2e70e0b4693bee167e7be7c3, type: 3}
   <ProjectileColor>k__BackingField: {r: 0.5262456, g: 0, b: 1, a: 1}
-  <ProjectileSize>k__BackingField: {x: 0.5, y: 0.5}
+  <ProjectileSize>k__BackingField: {x: 0.25, y: 0.25}
   <ProjectileSpeed>k__BackingField: 500
   <SpeedCurve>k__BackingField:
     serializedVersion: 2
@@ -58,4 +58,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   <ProjectileLifeTime>k__BackingField: 1.5
-  <Projectiles>k__BackingField: 2
+  <Projectiles>k__BackingField: 6

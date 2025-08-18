@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Survivors.Features.Contracts;
 using Survivors.Features.Enemies.Settings;
+using Survivors.Features.Map;
 using UnityEngine;
 using Zenject;
 
@@ -60,17 +61,16 @@ namespace Survivors.Features.Enemies.Core
 
         private bool TrySpawnEnemy(out Vector2 spawnPosition)
         {
-            Vector2 position = GetRandomScreenBorderPointAsWorldPosition(
+            var position = GetRandomScreenBorderPointAsWorldPosition(
                 _camera,
                 _spawnSettings.SpawnOffset.x,
                 _spawnSettings.SpawnOffset.y);
-            //Todo: add map size and use to check if inside
 
             spawnPosition = position;
             return true;
         }
 
-        private static Vector3 GetRandomScreenBorderPointAsWorldPosition(
+        private static Vector2 GetRandomScreenBorderPointAsWorldPosition(
             Camera camera,
             float widthOffset = 0,
             float heightOffset = 0)
