@@ -1,0 +1,96 @@
+using JetBrains.Annotations;
+using Survivors.Features.Contracts;
+using Survivors.Features.Enemies.Settings;
+using Survivors.Features.Map;
+using UnityEngine;
+using Zenject;
+
+namespace Survivors.Features.Enemies.Core
+{
+    [UsedImplicitly]
+    public class EnemySpawner : ITickable
+    {
+        private readonly SpawnSettings _spawnSettings;
+        private readonly IEnemyComponentManager _enemyComponentManager;
+        private readonly IEnemyFactory _enemyFactory;
+        private readonly Camera _camera;
+
+        private float _cooldown;
+
+        public EnemySpawner(
+            SpawnSettings spawnSettings,
+            IEnemyComponentManager enemyComponentManager,
+            IEnemyFactory enemyFactory)
+        {
+            _spawnSettings = spawnSettings;
+            _enemyComponentManager = enemyComponentManager;
+            _enemyFactory = enemyFactory;
+            _camera = Camera.main;
+        }
+
+        public void Tick()
+        {
+            if (CanSpawn()) SpawnEnemies();
+        }
+
+        private bool CanSpawn()
+        {
+            _cooldown -= Time.deltaTime;
+
+            if (_cooldown <= 0)
+            {
+                _cooldown = _spawnSettings.GetRandomSpawnCooldown();
+                return true;
+            }
+
+            return false;
+        }
+
+        private void SpawnEnemies()
+        {
+            if (_enemyComponentManager.Count >= _spawnSettings.MaxSpawnAmount) return;
+
+            var amount = _spawnSettings.GetSpawnAmount();
+            for (var i = 0; i < amount; i++)
+            {
+                if (!TrySpawnEnemy(out var spawnPosition)) continue;
+                var context = _enemyFactory.CreateEnemy(spawnPosition);
+                _enemyComponentManager.AddEnemy(in context);
+            }
+        }
+
+        private bool TrySpawnEnemy(out Vector2 spawnPosition)
+        {
+            var position = GetRandomScreenBorderPointAsWorldPosition(
+                _camera,
+                _spawnSettings.SpawnOffset.x,
+                _spawnSettings.SpawnOffset.y);
+
+            spawnPosition = position;
+            return true;
+        }
+
+        private static Vector2 GetRandomScreenBorderPointAsWorldPosition(
+            Camera camera,
+            float widthOffset = 0,
+            float heightOffset = 0)
+        {
+            var width = Screen.width;
+            var height = Screen.height;
+            var randomBorder = Random.Range(0, 4);
+
+            return randomBorder switch
+            {
+                0 => camera.ScreenToWorldPoint(new Vector3(Random.Range(-widthOffset, width + widthOffset),
+                    -heightOffset, 0)),
+                1 => camera.ScreenToWorldPoint(new Vector3(Random.Range(-widthOffset, width + widthOffset),
+                    height + heightOffset, 0)),
+                2 => camera.ScreenToWorldPoint(new Vector3(-widthOffset,
+                    Random.Range(-heightOffset, height + heightOffset), 0)),
+                3 => camera.ScreenToWorldPoint(new Vector3(width + heightOffset,
+                    Random.Range(heightOffset, height + heightOffset), 0)),
+                _ => Vector3.zero
+            };
+        }
+    }
+}
