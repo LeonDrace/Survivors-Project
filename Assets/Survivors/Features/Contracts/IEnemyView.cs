@@ -9,7 +9,7 @@ namespace Survivors.Features.Contracts
         int Id { get; set; }
         Transform Transform { get; }
 
-        void Initialize(int id, [NotNull] Action<int, float> onTakeDamage, [CanBeNull] Action<Vector2> onDespawn);
+        void Initialize([NotNull] Action<int, float> onTakeDamage, [CanBeNull] Action<Vector2> onDespawn);
         void OnDespawn();
         void Dispose();
         void OnTick();

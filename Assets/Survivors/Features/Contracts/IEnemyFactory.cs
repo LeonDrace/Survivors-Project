@@ -7,6 +7,6 @@ namespace Survivors.Features.Contracts
 {
     public interface IEnemyFactory
     {
-        EnemyComponentContext CreateEnemy(IEnemyComponentManager componentComponentManager, Vector2 position);
+        EnemyComponentContext CreateEnemy(Vector2 position);
     }
 }

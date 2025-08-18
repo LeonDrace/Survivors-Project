@@ -12,6 +12,7 @@ namespace Survivors.Features.VFX
         private Action _onParticleDespawn;
 
         public bool IsPlaying => _particleSystem.isPlaying;
+        public GameObject GameObject => gameObject;
 
         public void Initialize([NotNull] Action onParticleDespawn)
         {

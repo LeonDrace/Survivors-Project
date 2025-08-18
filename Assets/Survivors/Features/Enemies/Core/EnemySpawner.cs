@@ -54,7 +54,7 @@ namespace Survivors.Features.Enemies.Core
             for (var i = 0; i < amount; i++)
             {
                 if (!TrySpawnEnemy(out var spawnPosition)) continue;
-                var context = _enemyFactory.CreateEnemy(_enemyComponentManager, spawnPosition);
+                var context = _enemyFactory.CreateEnemy(spawnPosition);
                 _enemyComponentManager.AddEnemy(in context);
             }
         }

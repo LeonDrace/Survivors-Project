@@ -21,12 +21,8 @@ namespace Survivors.Features.Enemies.Components
         private Action<int, float> _onTakeDamage;
         private Action<Vector2> _onDespawn;
 
-        public void Initialize(
-            int id,
-            Action<int, float> onTakeDamage,
-            Action<Vector2> onDespawn)
+        public void Initialize(Action<int, float> onTakeDamage, Action<Vector2> onDespawn)
         {
-            Id = id;
             _onTakeDamage = onTakeDamage;
             _onDespawn = onDespawn;
         }
